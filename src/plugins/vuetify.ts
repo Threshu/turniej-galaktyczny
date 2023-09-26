@@ -10,9 +10,13 @@ import 'vuetify/styles'
 
 // Composables
 import { createVuetify } from 'vuetify'
+import { VStepper } from 'vuetify/labs/VStepper'
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
+  components: {
+    VStepper
+  },
   theme: {
     themes: {
       light: {
