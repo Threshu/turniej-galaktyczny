@@ -8,6 +8,7 @@
       <h1 class="text-h2 font-weight-bold">Vuetify</h1>
 
       <div class="py-14" />
+      <p>{{ $t("hello") }}</p>
 
       <v-row class="d-flex align-center justify-center">
         <v-col cols="auto">
