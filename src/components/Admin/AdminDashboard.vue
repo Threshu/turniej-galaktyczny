@@ -279,6 +279,10 @@ export default {
       await documentRef.update(gameDetails);
     },
     async endGame() {
+      await this.saveEndGameData();
+      await this.updateRatings();
+    },
+    async saveEndGameData() {
       this.endLoader = true;
       const gameDetails = {
         players: [],
@@ -289,6 +293,15 @@ export default {
       setTimeout(() => {
         this.endLoader = false;
       }, 500);
+    },
+    async updateRatings() {
+      const players = [...this.scores];
+      if (!players?.length || players?.length === 0) return;
+      const addPlayerPromises = players.map((player) => {
+        return projectFirestore.collection("users").add(player);
+      });
+      await Promise.all(addPlayerPromises);
+      this.scores = [];
     },
     getRandomQuestionId() {
       if (!this.questionsIds.length) return;
