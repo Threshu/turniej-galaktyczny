@@ -1,5 +1,9 @@
 @import "variables.scss";
 
+html {
+	overflow: hidden !important;
+}
+
 body {
   font-family: 'Droid Sans', sans-serif;
 }
