@@ -24,7 +24,11 @@
                 v-for="number in 3"
                 :key="number"
                 @click="activeDiffBtn = number"
-                ><span :class="{'diff-btn-active': activeDiffBtn === number}" style="font-size: 35px">{{ number }}</span></v-btn
+                ><span
+                  :class="{ 'diff-btn-active': activeDiffBtn === number }"
+                  style="font-size: 35px"
+                  >{{ number }}</span
+                ></v-btn
               >
             </v-col>
           </div>
@@ -34,11 +38,15 @@
       <div class="w-100 mt-15 text-center">
         <span style="font-size: 47px">Czy w Żabce można zjeść hot doga?</span>
       </div>
-      <div class="w-80 mt-15 pb-15 text-center d-flex justify-content-space-evenly answer-btns m-auto">
+      <div
+        class="w-80 mt-15 pb-15 text-center d-flex justify-content-space-evenly answer-btns m-auto"
+      >
         <div style="font-size: 47px">Tak</div>
         <div style="font-size: 47px">Nie</div>
       </div>
-      <div class="w-80 mt-15 text-center d-flex justify-content-space-evenly answer-btns m-auto">
+      <div
+        class="w-80 mt-15 text-center d-flex justify-content-space-evenly answer-btns m-auto"
+      >
         <div style="font-size: 47px">Pokaż odpowiedź</div>
       </div>
     </div>
@@ -64,21 +72,21 @@ import { projectFirestore } from "../../firebase/config";
 export default {
   components: { Dice },
   //emits: ["changePage"],
-  data(){
+  data() {
     return {
-      activeDiffBtn: 1
-    }
+      activeDiffBtn: 1,
+    };
   },
   async mounted() {
-    const querySnapshot = await projectFirestore.collection("questions")
+    const querySnapshot = await projectFirestore
+      .collection("questions")
       .where("type", "==", 1)
       .limit(1)
       .get();
     const xd = querySnapshot.docs.map((user) => {
       return { ...user.data(), id: user.id };
     });
-    console.log(xd);
-  }
+  },
 };
 </script>
 <style lang="scss">

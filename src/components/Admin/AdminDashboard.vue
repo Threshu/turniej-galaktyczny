@@ -46,7 +46,7 @@
                 </template>
               </v-text-field>
             </td>
-            <td>{{ item.score }}</td>
+            <td>{{ item.points }}</td>
             <td class="text-center">
               <v-btn color="primaryLight" icon @click="changeScore(item, 1)">
                 <v-icon>mdi-plus</v-icon>
@@ -180,11 +180,11 @@ export default {
       headers: [
         { value: "number" },
         { value: "nick" },
-        { value: "score", width: "5%" },
+        { value: "points", width: "5%" },
         { value: "actions", width: "20%" },
       ],
       alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-      scores: [{ nick: "", score: 0 }],
+      scores: [{ nick: "", points: 0 }],
       questionsIds: [],
       questions: [],
       randomQuestion: null,
@@ -245,7 +245,7 @@ export default {
       this.questionsIds = this.questions.map((question) => question.id);
     },
     addNewRecord() {
-      this.scores.push({ nick: "", score: 0 });
+      this.scores.push({ nick: "", points: 0 });
     },
     deleteRecord(item) {
       const index = this.scores.indexOf(item);
@@ -254,8 +254,8 @@ export default {
       }
     },
     async changeScore(item, value) {
-      if (item?.score === 0 && value === -1) return;
-      item.score += value;
+      if (item?.points === 0 && value === -1) return;
+      item.points += value;
       await this.updateGame();
     },
     required(v) {
@@ -279,8 +279,9 @@ export default {
       await documentRef.update(gameDetails);
     },
     async endGame() {
-      await this.saveEndGameData();
       await this.updateRatings();
+      await this.resetGame();
+      await this.saveEndGameData();
     },
     async saveEndGameData() {
       this.endLoader = true;
@@ -298,10 +299,20 @@ export default {
       const players = [...this.scores];
       if (!players?.length || players?.length === 0) return;
       const addPlayerPromises = players.map((player) => {
+        if (player?.nick == null || player?.nick === "") return;
         return projectFirestore.collection("users").add(player);
       });
       await Promise.all(addPlayerPromises);
       this.scores = [];
+    },
+    async resetGame() {
+      const gameDetails = {
+        players: [],
+        questionId: null,
+        showAnswer: false,
+      };
+      const documentRef = projectFirestore.collection("game").doc(this.gameId);
+      await documentRef.update(gameDetails);
     },
     getRandomQuestionId() {
       if (!this.questionsIds.length) return;

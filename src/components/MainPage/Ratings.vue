@@ -56,10 +56,7 @@ export default {
   },
   async mounted() {
     this.loader = true;
-    const response = await projectFirestore
-      .collection("users")
-      .orderBy("points", "desc")
-      .get();
+    const response = await projectFirestore.collection("users").get();
     this.players = response.docs.map((user) => {
       return { ...user.data(), id: user.id };
     });
