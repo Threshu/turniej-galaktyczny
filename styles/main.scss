@@ -79,6 +79,70 @@ body {
 	margin: auto;
 }
 
+.answer-btns div:hover {
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 0 0 5px $white;
+}
+
+.table-section {
+	.header-label {
+		letter-spacing: 5px;
+		font-size: 37px;
+	}
+
+	td {
+		font-size: 45px;
+	}
+
+	.custom_table_class tbody td {
+		border-bottom: thin solid white !important;
+	}
+}
+
+.question-section {
+	.label {
+		letter-spacing: 5px;
+		font-size: 49px;
+	}
+
+	.questionBox {
+		.title {
+			font-size: 30px;
+		}
+
+		.subtitle {
+			font-size: 20px;
+		}
+	}
+}
+
+.question-enter-from {
+  opacity: 0;
+}
+
+.question-enter-active {
+  transition: all 0.25s linear;
+}
+
+.question-leave-to {
+  transition: all 0.25s linear;
+  opacity: 0;
+}
+
+.answer-enter-from {
+  opacity: 0;
+}
+
+.answer-enter-active {
+  transition: all 1s linear;
+}
+
+.answer-leave-to {
+  transition: all 0.5s linear;
+  opacity: 0;
+}
+
 .wrapper {
 	height: 100%;
 	overflow: hidden;

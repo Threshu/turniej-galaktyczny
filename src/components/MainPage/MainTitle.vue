@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span v-text="tournament" class="title font-bold d-block" />
-    <span v-text="galactic" class="subtitle font-bold d-block" />
+    <span v-text="tournament" class="title-main font-bold d-block" />
+    <span v-text="galactic" class="subtitle-main font-bold d-block" />
   </div>
 </template>
 <script>
@@ -12,30 +12,30 @@ export default {
       galactic: "GALAKTYCZNY",
       mainPageButtons: [
         {
-          title: "Nowa gra"
+          title: "Nowa gra",
         },
         {
-          title: "Jak grać"
+          title: "Jak grać",
         },
         {
-          title: "Ranking graczy"
+          title: "Ranking graczy",
         },
         {
-          title: "Pytania"
-        }
-      ]
+          title: "Pytania",
+        },
+      ],
     };
   },
 };
 </script>
 <style>
-.title {
+.title-main {
   font-size: 148px;
   line-height: 0.6;
   letter-spacing: 5px;
 }
 
-.subtitle {
+.subtitle-main {
   font-size: 64px;
   letter-spacing: 10px;
 }

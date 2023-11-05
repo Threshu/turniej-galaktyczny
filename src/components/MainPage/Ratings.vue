@@ -56,7 +56,10 @@ export default {
   },
   async mounted() {
     this.loader = true;
-    const response = await projectFirestore.collection("users").get();
+    const response = await projectFirestore
+      .collection("users")
+      .orderBy("points", "desc")
+      .get();
     this.players = response.docs.map((user) => {
       return { ...user.data(), id: user.id };
     });
@@ -66,7 +69,7 @@ export default {
   },
   methods: {
     assignPlaces(players) {
-      if(!Array.isArray(players)) return [];
+      if (!Array.isArray(players)) return [];
       const sortedPlayers = [...players];
       sortedPlayers.sort((a, b) => b.points - a.points);
       let currentPlace = 1;

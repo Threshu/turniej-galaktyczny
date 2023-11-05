@@ -102,10 +102,4 @@ export default {
 .difficult-lvl {
   font-size: 29px;
 }
-
-.answer-btns div:hover {
-  font-weight: bold;
-  cursor: pointer;
-  text-shadow: 0 0 5px $white;
-}
 </style>

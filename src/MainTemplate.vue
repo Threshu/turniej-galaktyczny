@@ -1,13 +1,10 @@
 <template>
-<transition name="route" mode="out-in">
-        <component
-          :is="getComponent()"
-          @changePage="changePage"
-        />
-      </transition>
+  <transition name="route" mode="out-in">
+    <component :is="getComponent()" @changePage="changePage" />
+  </transition>
 </template>
 <script>
-import MainPage from "./components/MainPage.vue"
+import MainPage from "./components/MainPage.vue";
 import Questions from "./components/Questions/Questions.vue";
 import NewGame from "./components/NewGame/NewGame.vue";
 import * as PAGES from "./data/pages";
@@ -17,21 +14,21 @@ const TABS = {
   [PAGES.NEW_GAME]: NewGame,
 };
 export default {
-  data(){
+  data() {
     return {
-      selectedTab: "main"
-    }
+      selectedTab: "main",
+    };
   },
   methods: {
     getComponent() {
-      if(this.selectedTab == null) return TABS["main"];
+      if (this.selectedTab == null) return TABS["main"];
       return TABS[this.selectedTab];
     },
-    changePage(page){
-      this.selectedTab = page
-    }
+    changePage(page) {
+      this.selectedTab = page;
+    },
   },
-}
+};
 </script>
 <style>
 .route-enter-from {
