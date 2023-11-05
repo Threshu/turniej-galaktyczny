@@ -59,14 +59,25 @@
 </template>
 <script>
 import Dice from "../Dice.vue";
+import { projectFirestore } from "../../firebase/config";
 
 export default {
   components: { Dice },
-  emits: ["changePage"],
+  //emits: ["changePage"],
   data(){
     return {
       activeDiffBtn: 1
     }
+  },
+  async mounted() {
+    const querySnapshot = await projectFirestore.collection("questions")
+      .where("type", "==", 1)
+      .limit(1)
+      .get();
+    const xd = querySnapshot.docs.map((user) => {
+      return { ...user.data(), id: user.id };
+    });
+    console.log(xd);
   }
 };
 </script>
@@ -90,12 +101,6 @@ export default {
 
 .difficult-lvl {
   font-size: 29px;
-}
-
-.diff-btn-active {
-  font-weight: bold;
-  font-size: 50px !important;
-  text-shadow: 0 0 5px $white;
 }
 
 .answer-btns div:hover {
