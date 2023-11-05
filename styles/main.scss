@@ -1,0 +1,76 @@
+@import "variables.scss";
+
+body {
+  font-family: 'Droid Sans', sans-serif;
+}
+
+.v-application {
+	background-color: $primary;
+	color: $white;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: $primary;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $dark;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $primary;
+}
+
+.bg-primary {
+	background-color: $primary !important;
+}
+
+.title-main-page {
+	font-size: 148px;
+}
+
+.font-bold {
+	font-weight: bold;
+}
+
+.align-items-center {
+	align-items: center;
+}
+
+.justify-content-center {
+	justify-content: center;
+}
+
+.justify-content-space-evenly {
+	justify-content: space-evenly;
+}
+
+.main-page-btn {
+  background-color: $primaryLight;
+	font-size: 55px;
+	border-radius: 50px;
+	margin: 15px 0;
+}
+
+.w-80 {
+	width: 80%;
+}
+
+.w-60 {
+	width: 60%;
+}
+
+.h-75 {
+	height: 75%;
+}
+
+.close-btn {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+
+.m-auto {
+	margin: auto;
+}
