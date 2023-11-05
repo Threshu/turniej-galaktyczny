@@ -23,7 +23,7 @@
                 size="80"
                 v-for="number in 3"
                 :key="number"
-                @click="activeDiffBtn = number"
+                @click="changeDiffLvl(number)"
                 ><span
                   :class="{ 'diff-btn-active': activeDiffBtn === number }"
                   style="font-size: 35px"
@@ -35,23 +35,79 @@
         </v-card-title>
       </v-card>
 
-      <div class="w-100 mt-15 text-center">
-        <span style="font-size: 47px">Czy w Żabce można zjeść hot doga?</span>
-      </div>
-      <div
-        class="w-80 mt-15 pb-15 text-center d-flex justify-content-space-evenly answer-btns m-auto"
-      >
-        <div style="font-size: 47px">Tak</div>
-        <div style="font-size: 47px">Nie</div>
-      </div>
-      <div
-        class="w-80 mt-15 text-center d-flex justify-content-space-evenly answer-btns m-auto"
-      >
-        <div style="font-size: 47px">Pokaż odpowiedź</div>
+      <div class="d-flex flex-column h-100 justify-content-center mt-15">
+        <transition name="answer" mode="out-in">
+          <div v-if="current_question_type === EASY">
+            <div class="question-text pa-5 pt-0 text-center">
+              {{ current_question_text }}
+            </div>
+            <div class="w-100 d-flex justify-content-space-evenly question-text">
+              <v-col v-for="answer in current_question_answers" class="text-center">
+                <div>{{ answer }}</div>
+              </v-col>
+            </div>
+            <div class="w-100 text-center question-text mt-5 px-3">
+              Odpowiedź:
+              <transition name="answer" mode="out-in">
+                <span class="font-bold" v-if="showAnswer">{{
+                  current_question_correct_answer
+                }}</span>
+                <span v-else />
+              </transition>
+            </div>
+          </div>
+          <div v-else-if="current_question_type === NORMAL">
+            <div class="question-text pa-5 pt-0 text-center">
+              {{ current_question_text }}
+            </div>
+            <div class="d-flex flex-column">
+              <v-col
+                v-for="(answer, index) in current_question_answers"
+                class="text-center"
+              >
+                <div class="question-subtitle">{{ alphabet[index] }}. {{ answer }}</div>
+              </v-col>
+            </div>
+            <div class="w-100 text-center question-text mt-5 px-3">
+              Odpowiedź:
+              <transition name="answer" mode="out-in">
+                <span class="font-bold" v-if="showAnswer">{{
+                  current_question_correct_answer
+                }}</span>
+                <span v-else />
+              </transition>
+            </div>
+          </div>
+          <div v-else-if="current_question_type === HARD">
+            <div class="question-text pa-5 pt-0 text-center">
+              {{ current_question_text }}
+            </div>
+            <div class="w-100 text-center question-text mt-5 px-3">
+              Odpowiedź:
+              <transition name="answer" mode="out-in">
+                <span class="font-bold" v-if="showAnswer">{{
+                  current_question_correct_answer
+                }}</span>
+                <span v-else />
+              </transition>
+            </div>
+          </div>
+          <div
+            v-else-if="current_question_text == null"
+            class="question-text pa-5 pt-0 text-center"
+          >
+            Pytanie nie zostało wczytane
+          </div>
+        </transition>
+        <div class="w-100 d-flex justify-content-center mt-15">
+          <v-btn rounded color="primaryLight" @click="showAnswer = !showAnswer"
+            >Pokaż odpowiedź</v-btn
+          >
+        </div>
       </div>
     </div>
     <div class="roll-wrapper roll-right">
-      <Dice />
+      <Dice @roll="roll" />
     </div>
     <div class="roll-wrapper roll-left">
       <v-btn
@@ -74,18 +130,58 @@ export default {
   //emits: ["changePage"],
   data() {
     return {
+      alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
       activeDiffBtn: 1,
+      questions: null,
+      randomQuestion: null,
+      EASY: 1,
+      NORMAL: 2,
+      HARD: 3,
+      showAnswer: false,
     };
   },
   async mounted() {
-    const querySnapshot = await projectFirestore
-      .collection("questions")
-      .where("type", "==", 1)
-      .limit(1)
-      .get();
-    const xd = querySnapshot.docs.map((user) => {
-      return { ...user.data(), id: user.id };
-    });
+    await this.getAllQuestions();
+    this.getRandomQuestion();
+  },
+  computed: {
+    current_question_type() {
+      return this.randomQuestion?.type;
+    },
+    current_question_text() {
+      return this.randomQuestion?.question;
+    },
+    current_question_answers() {
+      return this.randomQuestion?.answers;
+    },
+    current_question_correct_answer() {
+      return this.randomQuestion?.correctAnswer;
+    },
+  },
+  methods: {
+    async getAllQuestions() {
+      const querySnapshot = await projectFirestore
+        .collection("questions")
+        .where("type", "==", this.activeDiffBtn)
+        .get();
+      this.questions = querySnapshot.docs.map((question) => {
+        return { ...question.data(), id: question.id };
+      });
+    },
+    getRandomQuestion() {
+      const randomIndex = Math.floor(Math.random() * this.questions.length);
+      this.randomQuestion = this.questions[randomIndex];
+    },
+    async roll() {
+      const randomOneToThree = Math.floor(Math.random() * 3) + 1;
+      await this.changeDiffLvl(randomOneToThree);
+    },
+    async changeDiffLvl(number) {
+      this.showAnswer = false;
+      this.activeDiffBtn = number;
+      await this.getAllQuestions();
+      this.getRandomQuestion();
+    },
   },
 };
 </script>
@@ -109,5 +205,13 @@ export default {
 
 .difficult-lvl {
   font-size: 29px;
+}
+
+.question-text {
+  font-size: 45px;
+}
+
+.question-subtitle {
+  font-size: 35px;
 }
 </style>

@@ -1,12 +1,17 @@
 <template>
-  <div class="container" >
+  <div class="container">
     <div class="cube" ref="cube" @click="rollDice">
       <div class="front">
         <span class="fas fa-circle"></span>
       </div>
       <div class="back">
-        <pre class="firstPre"><span class="fas fa-circle"></span>    <span class="fas fa-circle"></span>    <span class="fas fa-circle"></span></pre><br>
-        <pre class="secondPre"><span class="fas fa-circle"></span>    <span class="fas fa-circle"></span>    <span class="fas fa-circle"></span></pre>
+        <pre
+          class="firstPre"
+        ><span class="fas fa-circle"></span>    <span class="fas fa-circle"></span>    <span class="fas fa-circle"></span></pre>
+        <br />
+        <pre
+          class="secondPre"
+        ><span class="fas fa-circle"></span>    <span class="fas fa-circle"></span>    <span class="fas fa-circle"></span></pre>
       </div>
       <div class="top">
         <span class="fas fa-circle"></span>
@@ -36,7 +41,7 @@
 
 <script>
 export default {
-  name: 'DiceRoller',
+  name: "DiceRoller",
   methods: {
     rollDice() {
       const cube = this.$refs.cube;
@@ -47,26 +52,27 @@ export default {
         [135, -217, -88],
         [-224, -317, 5],
         [-47, -219, -81],
-        [-133, -360, -53]
+        [-133, -360, -53],
       ];
-      cube.style.animation = 'animate 1.4s linear';
+      cube.style.animation = "animate 1.4s linear";
       const randomAngle = Math.floor(Math.random() * 6) + 1;
       cube.style.transform = `rotateX(${angleArray[randomAngle][0]}deg) rotateY(${angleArray[randomAngle][1]}deg) rotateZ(${angleArray[randomAngle][2]}deg)`;
-      cube.style.transition = '1s linear';
+      cube.style.transition = "1s linear";
 
-      cube.addEventListener('animationend', () => {
-        cube.style.animation = '';
+      cube.addEventListener("animationend", () => {
+        cube.style.animation = "";
       });
-    }
-  }
-}
+      this.$emit("roll");
+    },
+  },
+};
 </script>
 
 <style scoped>
 .container {
   perspective: 1000px;
   perspective-origin: 50% 50%;
-  font-family: 'fontawesome';
+  font-family: "fontawesome";
 }
 .container .cube {
   position: relative;
@@ -136,7 +142,7 @@ export default {
 
 .container .cube .back pre {
   font-size: 16px;
-  font-family: 'Font Awesome 5 Free';
+  font-family: "Font Awesome 5 Free";
   margin: 0;
 }
 
@@ -188,7 +194,7 @@ export default {
 
 .container .cube .back pre {
   font-size: 16px;
-  font-family: 'fontawesome';
+  font-family: "fontawesome";
 
   margin: 0;
 }
@@ -223,6 +229,4 @@ export default {
     top: 60%;
   }
 }
-
-
 </style>
