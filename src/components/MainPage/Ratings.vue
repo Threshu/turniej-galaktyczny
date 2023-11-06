@@ -1,6 +1,11 @@
 <template>
   <div class="d-flex w-100 h-75">
-    <v-card class="w-80 ratings py-5" elevation="9" color="primaryLight" outlined>
+    <v-card
+      class="w-80 ratings py-5"
+      elevation="9"
+      color="primaryLight"
+      outlined
+    >
       <v-btn
         elevation="0"
         color="primaryLight"
@@ -31,8 +36,15 @@
           </v-row>
         </template>
         <template v-else>
-          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
-            <v-progress-circular :size="70" :width="7" color="white" indeterminate />
+          <div
+            class="w-100 h-100 d-flex justify-content-center align-items-center"
+          >
+            <v-progress-circular
+              :size="70"
+              :width="7"
+              color="white"
+              indeterminate
+            />
           </div>
         </template>
       </v-card-text>
@@ -51,8 +63,7 @@ export default {
   computed: {
     players_to_display() {
       const players = [...this.players];
-      const top10 = players.slice(0, 10);
-      return this.assignPlaces(top10);
+      return this.assignPlaces(players).slice(0, 10);
     },
   },
   async mounted() {
