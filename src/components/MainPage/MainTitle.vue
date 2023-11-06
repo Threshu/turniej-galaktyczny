@@ -10,33 +10,20 @@ export default {
     return {
       tournament: "TURNIEJ",
       galactic: "GALAKTYCZNY",
-      mainPageButtons: [
-        {
-          title: "Nowa gra",
-        },
-        {
-          title: "Jak grać",
-        },
-        {
-          title: "Ranking graczy",
-        },
-        {
-          title: "Pytania",
-        },
-      ],
     };
   },
 };
 </script>
-<style>
+<style lang="scss">
+@import "../../../styles/variables.scss";
 .title-main {
   font-size: 148px;
   line-height: 0.6;
-  letter-spacing: 5px;
+  color: $primaryLight;
 }
 
 .subtitle-main {
   font-size: 64px;
-  letter-spacing: 10px;
+  color: $primaryLight;
 }
 </style>

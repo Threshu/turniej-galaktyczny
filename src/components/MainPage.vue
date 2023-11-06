@@ -1,16 +1,19 @@
 <template>
   <div class="w-100 h-100 d-flex">
-    <v-col cols="6" class="d-flex align-items-center justify-content-center flex-column">
-      <div v-for="btn in mainPageButtons" class="w-80">
-        <v-btn class="main-page-btn font-bold text-white" block elevation="9" size="100" @click="changePage(btn)">{{ btn.title }}</v-btn>
+    <v-col cols="6" class="d-flex align-items-end justify-content-center flex-column">
+      <div v-for="btn in mainPageButtons" class="w-100 d-flex justify-content-end mr-10">
+        <v-btn
+          class="main-page-btn font-bold text-white w-50"
+          elevation="9"
+          size="50"
+          @click="changePage(btn)"
+          >{{ btn.title }}</v-btn
+        >
       </div>
     </v-col>
-    <v-col cols="6" class="d-flex align-items-center justify-content-center">
+    <v-col cols="6" class="d-flex align-items-center justify-content-start">
       <transition name="fade" mode="out-in">
-        <component
-          :is="getComponent()"
-          @close="selectedTab = null"
-        />
+        <component :is="getComponent()" @close="selectedTab = null" />
       </transition>
     </v-col>
   </div>
@@ -33,33 +36,33 @@ export default {
         {
           title: "Nowa gra",
           componentName: "newGame",
-          emit: true
+          emit: true,
         },
         {
           title: "Jak grać",
-          componentName: "howToPlay"
+          componentName: "howToPlay",
         },
         {
           title: "Ranking graczy",
-          componentName: "ratings"
+          componentName: "ratings",
         },
         {
           title: "Pytania",
           componentName: "questions",
-          emit: true
-        }
-      ]
+          emit: true,
+        },
+      ],
     };
   },
   methods: {
     getComponent() {
-      if(this.selectedTab == null) return TABS["mainPage"];
+      if (this.selectedTab == null) return TABS["mainPage"];
       return TABS[this.selectedTab];
     },
-    changePage(btn){
-      if(btn?.emit) return this.$emit("changePage", btn.componentName)
+    changePage(btn) {
+      if (btn?.emit) return this.$emit("changePage", btn.componentName);
       this.selectedTab = btn.componentName;
-    }
+    },
   },
 };
 </script>

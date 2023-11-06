@@ -1,15 +1,16 @@
 @import "variables.scss";
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext');
 
 html {
 	overflow: hidden !important;
 }
 
 body {
-  font-family: 'Droid Sans', sans-serif;
+  font-family: 'Montserrat', Arial, sans-serif;
 }
 
 .v-application {
-	background-color: $primary;
+	background-color: $pageBackground;
 	color: $white;
 }
 
@@ -35,15 +36,23 @@ body {
 }
 
 .font-bold {
-	font-weight: bold;
+	font-weight: bold !important;
 }
 
 .align-items-center {
 	align-items: center;
 }
 
+.align-items-end {
+	align-items: end;
+}
+
 .justify-content-center {
 	justify-content: center;
+}
+
+.justify-content-end {
+	justify-content: end;
 }
 
 .justify-content-space-evenly {
@@ -52,7 +61,7 @@ body {
 
 .main-page-btn {
   background-color: $primaryLight;
-	font-size: 55px;
+	font-size: 35px;
 	border-radius: 50px;
 	margin: 15px 0;
 }

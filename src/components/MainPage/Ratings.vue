@@ -1,11 +1,6 @@
 <template>
   <div class="d-flex w-100 h-75">
-    <v-card
-      class="w-80 ratings py-5"
-      elevation="9"
-      color="primaryLight"
-      outlined
-    >
+    <v-card class="w-80 ratings py-5" elevation="9" color="white">
       <v-btn
         elevation="0"
         color="primaryLight"
@@ -15,7 +10,7 @@
       >
         <v-icon size="45">mdi-close</v-icon>
       </v-btn>
-      <v-card-title class="text-center"> TOP 10 graczy </v-card-title>
+      <v-card-title class="text-center font-bold"> TOP 10 </v-card-title>
       <v-card-text class="w-100 m-auto my-2">
         <template v-if="!loader">
           <v-row
@@ -36,15 +31,8 @@
           </v-row>
         </template>
         <template v-else>
-          <div
-            class="w-100 h-100 d-flex justify-content-center align-items-center"
-          >
-            <v-progress-circular
-              :size="70"
-              :width="7"
-              color="white"
-              indeterminate
-            />
+          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+            <v-progress-circular :size="70" :width="7" color="white" indeterminate />
           </div>
         </template>
       </v-card-text>
@@ -94,7 +82,12 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "../../../styles/variables.scss";
 .ratings {
+  color: $primary !important;
+  box-shadow: 10px 10px 0 #43b649 !important;
+  border-radius: 0 !important;
+
   .v-card-title {
     font-size: 53px;
     line-height: normal !important;
@@ -103,7 +96,7 @@ export default {
   .v-card-text {
     font-size: 30px;
     line-height: 1.2;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Montserrat", Arial, sans-serif;
     height: calc(100% - 200px);
   }
 }

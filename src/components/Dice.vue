@@ -78,7 +78,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../styles/variables.scss";
+
 .container {
   perspective: 1000px;
   perspective-origin: 50% 50%;
@@ -169,35 +171,35 @@ export default {
 }
 
 .container .cube .front {
-  background: #222;
+  background: $primary;
   transform: translateZ(50px);
 }
 
 .container .cube .back {
-  background: #222;
+  background: $primary;
   transform: translateZ(-50px) rotateY(180deg);
 }
 
 .container .cube .right {
-  background: #222;
+  background: $primary;
   transform-origin: top right;
   transform: rotateY(-270deg) translateX(50px);
 }
 
 .container .cube .left {
-  background: #222;
+  background: $primary;
   transform-origin: center left;
   transform: rotateY(270deg) translateX(-50px);
 }
 
 .container .cube .top {
-  background: #222;
+  background: $primary;
   transform-origin: top center;
   transform: rotateX(-270deg) translateY(-50px);
 }
 
 .container .cube .bottom {
-  background: #222;
+  background: $primary;
   transform-origin: bottom center;
   transform: rotateX(270deg) translateY(50px);
 }
@@ -208,18 +210,6 @@ export default {
 
   margin: 0;
 }
-
-/*.container .cube .back .firstPre {
-  position: absolute;
-  top: 11px;
-  left: 13px;
-}
-
-.container .cube .back .secondPre {
-  position: absolute;
-  bottom: 11px;
-  right: 13px;
-}*/
 
 @keyframes animate {
   25% {

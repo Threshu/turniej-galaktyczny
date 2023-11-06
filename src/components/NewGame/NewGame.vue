@@ -4,12 +4,12 @@
     <div id="stars2"></div>
     <div id="stars3"></div>
     <template v-if="current_question_id && !loader">
-      <v-col class="table-section">
+      <v-col class="table-section px-10">
         <v-data-table
           :headers="headers"
           :items="players_to_display"
           style="background-color: transparent; color: white"
-          class="elevation-10 custom_table_class"
+          class="custom_table_class"
           no-data-text="Brak zapisanych zawodników"
           :height="'85vh'"
           :loading="loader"
@@ -34,7 +34,7 @@
           </template>
         </v-data-table>
       </v-col>
-      <v-col class="question-section">
+      <v-col class="question-section px-10">
         <div class="w-100 text-center label font-bold">PYTANIE</div>
         <div class="w-100 d-flex justify-content-center">
           <v-btn
@@ -66,15 +66,16 @@
                       {{ current_question_text }}
                     </div>
                     <div class="w-100 d-flex justify-content-space-evenly title">
-                      <v-col
-                        v-for="answer in current_question_answers"
-                        class="text-center"
-                      >
-                        <div>{{ answer }}</div>
-                      </v-col>
+                      <template v-for="(answer, index) in current_question_answers">
+                        <v-col v-if="index === 0" class="text-right mr-10">
+                          <div>{{ answer }}</div>
+                        </v-col>
+                        <v-col v-if="index === 1" class="text-left ml-10">
+                          <div>{{ answer }}</div>
+                        </v-col>
+                      </template>
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
-                      Odpowiedź:
                       <transition name="answer" mode="out-in">
                         <span class="font-bold" v-if="current_question_show_answer">{{
                           current_question_correct_answer
@@ -94,13 +95,12 @@
                     <div class="d-flex flex-column">
                       <v-col
                         v-for="(answer, index) in current_question_answers"
-                        class="text-center"
+                        class="text-center py-0"
                       >
                         <div class="subtitle">{{ alphabet[index] }}. {{ answer }}</div>
                       </v-col>
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
-                      Odpowiedź:
                       <transition name="answer" mode="out-in">
                         <span class="font-bold" v-if="current_question_show_answer">{{
                           current_question_correct_answer
@@ -118,7 +118,6 @@
                       {{ current_question_text }}
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
-                      Odpowiedź:
                       <transition name="answer" mode="out-in">
                         <span class="font-bold" v-if="current_question_show_answer">{{
                           current_question_correct_answer

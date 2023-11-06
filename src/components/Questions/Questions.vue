@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative" class="w-100 h-100">
+  <div style="position: relative" class="w-100 h-100 bg-white questions-page">
     <div>
       <div class="w-100 d-flex px-4 difficult-lvl">
         <v-spacer /><span style="margin-right: 40px">Poziom trudności</span>
@@ -41,49 +41,46 @@
             <div class="question-text pa-5 pt-0 text-center">
               {{ current_question_text }}
             </div>
-            <div class="w-100 d-flex justify-content-space-evenly question-text">
-              <v-col v-for="answer in current_question_answers" class="text-center">
-                <div>{{ answer }}</div>
-              </v-col>
-            </div>
-            <div class="w-100 text-center question-text mt-5 px-3">
-              Odpowiedź:
-              <transition name="answer" mode="out-in">
-                <span class="font-bold" v-if="showAnswer">{{
-                  current_question_correct_answer
-                }}</span>
-                <span v-else />
-              </transition>
+            <div class="w-100 d-flex justify-content-space-evenly answer-text">
+              <template v-for="(answer, index) in current_question_answers">
+                <v-col
+                  v-if="index === 0"
+                  class="text-right mr-10"
+                  :class="{ 'bad-answer': !answer.correct && showAnswer }"
+                >
+                  <div>{{ answer.text }}</div>
+                </v-col>
+                <v-col
+                  v-if="index === 1"
+                  class="text-left ml-10"
+                  :class="{ 'bad-answer': !answer.correct && showAnswer }"
+                >
+                  <div>{{ answer.text }}</div>
+                </v-col>
+              </template>
             </div>
           </div>
           <div v-else-if="current_question_type === NORMAL">
             <div class="question-text pa-5 pt-0 text-center">
               {{ current_question_text }}
             </div>
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column answer-text">
               <v-col
                 v-for="(answer, index) in current_question_answers"
-                class="text-center"
+                class="text-center py-0"
+                :class="{ 'bad-answer': !answer.correct && showAnswer }"
               >
-                <div class="question-subtitle">{{ alphabet[index] }}. {{ answer }}</div>
+                <div class="question-subtitle">
+                  {{ alphabet[index] }}. {{ answer.text }}
+                </div>
               </v-col>
-            </div>
-            <div class="w-100 text-center question-text mt-5 px-3">
-              Odpowiedź:
-              <transition name="answer" mode="out-in">
-                <span class="font-bold" v-if="showAnswer">{{
-                  current_question_correct_answer
-                }}</span>
-                <span v-else />
-              </transition>
             </div>
           </div>
           <div v-else-if="current_question_type === HARD">
             <div class="question-text pa-5 pt-0 text-center">
               {{ current_question_text }}
             </div>
-            <div class="w-100 text-center question-text mt-5 px-3">
-              Odpowiedź:
+            <div class="w-100 text-center answer-text mt-5 px-3">
               <transition name="answer" mode="out-in">
                 <span class="font-bold" v-if="showAnswer">{{
                   current_question_correct_answer
@@ -94,13 +91,19 @@
           </div>
           <div
             v-else-if="current_question_text == null"
-            class="question-text pa-5 pt-0 text-center"
+            class="question-text pa-5 pt-0 text-center answer-text"
           >
-            Pytanie nie zostało wczytane
+            <v-progress-circular :size="70" :width="7" color="primary" indeterminate />
           </div>
         </transition>
-        <div class="w-100 d-flex justify-content-center mt-15">
-          <v-btn rounded color="primaryLight" @click="showAnswer = !showAnswer"
+        <div class="w-25 mt-15 m-auto answer-btn">
+          <v-btn
+            size="70"
+            class="font-bold"
+            rounded
+            block
+            color="primaryLight"
+            @click="showAnswer = true"
             >Pokaż odpowiedź</v-btn
           >
         </div>
@@ -152,7 +155,13 @@ export default {
       return this.randomQuestion?.question;
     },
     current_question_answers() {
-      return this.randomQuestion?.answers;
+      const answers = this.randomQuestion?.answers;
+      return answers.map((answer) => {
+        return {
+          correct: answer === this.current_question_correct_answer,
+          text: answer,
+        };
+      });
     },
     current_question_correct_answer() {
       return this.randomQuestion?.correctAnswer;
@@ -188,30 +197,48 @@ export default {
 <style lang="scss">
 @import "../../../styles/variables.scss";
 
-.roll-wrapper {
-  position: absolute;
-  bottom: 5px;
-}
+.questions-page {
+  .answer-btn {
+    font-size: 30px;
+  }
 
-.roll-right {
-  right: 5px;
-  transform: translate(-100%, -50%);
-}
+  .bad-answer {
+    color: lightgray;
+  }
 
-.roll-left {
-  left: 5px;
-  transform: translate(0%, -25%);
-}
+  .roll-wrapper {
+    position: absolute;
+    bottom: 5px;
+  }
 
-.difficult-lvl {
-  font-size: 29px;
-}
+  .roll-right {
+    right: 5px;
+    transform: translate(-100%, -50%);
+  }
 
-.question-text {
-  font-size: 45px;
-}
+  .roll-left {
+    left: 5px;
+    transform: translate(0%, -25%);
+  }
 
-.question-subtitle {
-  font-size: 35px;
+  .difficult-lvl {
+    font-size: 29px;
+  }
+
+  .question-text {
+    font-weight: bold;
+    color: $primary;
+    font-size: 45px;
+  }
+
+  .answer-text {
+    font-weight: bold;
+    color: $primaryLight;
+    font-size: 45px;
+  }
+
+  .question-subtitle {
+    font-size: 35px;
+  }
 }
 </style>
