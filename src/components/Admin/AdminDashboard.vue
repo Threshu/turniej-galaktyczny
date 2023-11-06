@@ -68,13 +68,25 @@
       </v-data-table>
       <div class="w-100 d-flex mt-5">
         <v-col class="d-flex justify-content-center align-items-center">
-          <v-btn color="primaryLight" :loading="startLoader" rounded @click="startGame"
+          <v-btn
+            class="font-bold"
+            :disabled="gameStarted"
+            :color="!gameStarted ? 'primaryLight' : 'gray'"
+            :loading="startLoader"
+            rounded
+            @click="startGame"
             >Rozpocznij grę</v-btn
           >
         </v-col>
-        <Timer />
+        <Timer :time="timeDisplay" :time-left="timeLeft" />
         <v-col class="d-flex justify-content-center align-items-center">
-          <v-btn color="primaryLight" :loading="endLoader" rounded @click="endGame"
+          <v-btn
+            class="font-bold"
+            :loading="endLoader"
+            rounded
+            @click="endGame"
+            :disabled="!gameStarted"
+            :color="gameStarted ? 'primaryLight' : ''"
             >Zakończ grę</v-btn
           >
         </v-col>
@@ -168,7 +180,12 @@
       <div class="w-100 d-flex justify-content-center mt-5">
         <transition name="question" mode="out-in">
           <template v-if="!showAnswer">
-            <v-btn color="primaryLight" rounded @click="showAnswerFn"
+            <v-btn
+              class="font-bold"
+              :disabled="!gameStarted"
+              :color="gameStarted ? 'primaryLight' : 'gray'"
+              rounded
+              @click="showAnswerFn"
               >Pokaż odpowiedź</v-btn
             >
           </template>
@@ -190,7 +207,10 @@ export default {
   },
   data() {
     return {
+      timer: null,
       activeDiffBtn: 1,
+      timeLeft: 20 * 60 * 1000, // 20 minutes in milliseconds
+      timeDisplay: "--:--",
       headers: [
         { value: "number" },
         { value: "nick" },
@@ -213,25 +233,9 @@ export default {
       HARD: 3,
       showAnswer: false,
       startDate: null,
-      timerStartTime: 0,
-      countdownDuration: 1200, // 20 minut * 60 sekund
-      now: Math.floor(Date.now() / 1000),
     };
   },
   computed: {
-    //countdown() {
-    //  const elapsed = this.now - this.timerStartTime;
-    //  console.log(elapsed);
-    //  let remaining = this.countdownDuration - elapsed;
-    //  if (remaining < 0) {
-    //    remaining = 0;
-    //  }
-    //  const minutes = Math.floor(remaining / 60);
-    //  const seconds = remaining % 60;
-    //  return `${minutes.toString().padStart(2, "0")}:${seconds
-    //    .toString()
-    //    .padStart(2, "0")}`;
-    //},
     random_question_text() {
       return this.randomQuestion?.question;
     },
@@ -248,7 +252,6 @@ export default {
   async mounted() {
     this.loader = true;
     await this.getCurrentGame();
-    if (this.scores?.length > 0) this.gameStarted = true;
     await this.setQuestionConfig(this.EASY);
     this.loader = false;
   },
@@ -257,8 +260,11 @@ export default {
       const result = await projectFirestore.collection("game").doc(this.gameId).get();
       const game = result.data();
       this.scores = [...game.players];
-      const time = game.startDate;
-      //this.timerStartTime = time?.seconds;
+      if (this.scores?.length > 0) this.gameStarted = true;
+      if (game && game.startDate) {
+        this.startDate = new Date(game.startDate).getTime();
+        this.startCountdown();
+      }
     },
     async setQuestionConfig(difficultyLvl) {
       await this.getAllQuestions(difficultyLvl);
@@ -300,21 +306,17 @@ export default {
     },
     async startGame() {
       this.startLoader = true;
+      this.startCountdown();
       this.setQuestionsIds();
       this.getRandomQuestionId();
       await this.getRandomQuestion();
-      this.startDate = new Date();
+      const now = new Date();
+      this.startDate = now.getTime();
       await this.updateGame();
-      this.now = Math.floor(Date.now() / 1000);
-      this.intervalId = setInterval(() => {
-        this.updateTimer();
-      }, 1000);
       setTimeout(() => {
         this.startLoader = false;
-        this.gameStarted = true;
       }, 500);
-      this.startDate = null;
-      await this.getCurrentGame();
+      this.gameStarted = true;
     },
     async updateGame() {
       const gameDetails = {
@@ -326,11 +328,35 @@ export default {
       const documentRef = projectFirestore.collection("game").doc(this.gameId);
       await documentRef.update(gameDetails);
     },
+    startCountdown() {
+      if (this.timer) clearInterval(this.timer);
+      this.timer = setInterval(() => {
+        const currentTime = new Date().getTime();
+        const timeElapsed = currentTime - this.startDate;
+        this.timeLeft = 20 * 60 * 1000 - timeElapsed;
+        if (this.timeLeft <= 0) {
+          this.timeLeft = 0;
+          clearInterval(this.timer);
+        }
+        this.updateTimeDisplay();
+      }, 1000);
+    },
+    updateTimeDisplay() {
+      const minutes = Math.floor(this.timeLeft / (60 * 1000));
+      const seconds = Math.floor((this.timeLeft % (60 * 1000)) / 1000);
+
+      this.timeDisplay = `${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    },
     async endGame() {
       if (!this.gameStarted) return;
       await this.updateRatings();
       await this.resetGame();
       await this.saveEndGameData();
+      clearInterval(this.timer);
+      this.timeDisplay = "20:00";
+      this.gameStarted = false;
     },
     async saveEndGameData() {
       this.endLoader = true;
@@ -359,6 +385,7 @@ export default {
         players: [],
         questionId: null,
         showAnswer: false,
+        startDate: null,
       };
       const documentRef = projectFirestore.collection("game").doc(this.gameId);
       await documentRef.update(gameDetails);
@@ -392,9 +419,9 @@ export default {
       if (!this.gameStarted) return;
       await this.updateGame();
     },
-    updateTimer() {
-      this.now++;
-    },
+  },
+  beforeDestroy() {
+    if (this.timer) clearInterval(this.timer);
   },
 };
 </script>

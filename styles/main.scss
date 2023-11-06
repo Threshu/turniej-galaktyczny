@@ -126,6 +126,25 @@ body {
 	}
 }
 
+.pulse {
+  animation: pulseAnimation 1s infinite;
+}
+
+@keyframes pulseAnimation {
+  0% {
+    color: #ff0000;
+    transform: scale(1);
+  }
+  50% {
+    color: #ff0000;
+    transform: scale(1.1);
+  }
+  100% {
+    color: #ff0000;
+    transform: scale(1);
+  }
+}
+
 .question-enter-from {
   opacity: 0;
 }

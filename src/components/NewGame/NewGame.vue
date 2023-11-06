@@ -143,6 +143,9 @@
             </transition>
           </v-card>
         </div>
+        <div class="w-100 d-flex justify-content-center mt-3">
+          <Timer :time="timeDisplay" :time-left="timeLeft" />
+        </div>
       </v-col>
     </template>
     <template v-else-if="!loader">
@@ -153,14 +156,19 @@
   </section>
 </template>
 <script>
+import Timer from "../Timer.vue";
 import Ratings from "../MainPage/Ratings.vue";
 import { projectFirestore } from "../../firebase/config";
 export default {
   components: {
     Ratings,
+    Timer,
   },
   data() {
     return {
+      timer: null,
+      timeLeft: 20 * 60 * 1000, // 20 minutes in milliseconds
+      timeDisplay: "--:--",
       gameId: "x4SieVrmpZ2TLV7BKA7O",
       currentGame: null,
       currentQuestion: null,
@@ -181,6 +189,9 @@ export default {
     },
     current_question_show_answer() {
       return this.currentGame?.showAnswer;
+    },
+    current_question_time() {
+      return this.currentGame?.startDate;
     },
     current_question_type() {
       return this.currentQuestion?.type;
@@ -210,7 +221,10 @@ export default {
     current_question_id: {
       immediate: true,
       async handler() {
-        if (this.current_question_id == null) return;
+        if (this.current_question_id == null) {
+          clearInterval(this.timer);
+          return;
+        }
         await this.getCurrentQuestion();
       },
     },
@@ -223,8 +237,30 @@ export default {
         .onSnapshot((doc) => {
           if (doc.exists) {
             this.currentGame = { ...doc.data(), id: doc.id };
+            this.startCountdown();
           }
         });
+    },
+    startCountdown() {
+      if (this.timer) clearInterval(this.timer);
+      this.timer = setInterval(() => {
+        const currentTime = new Date().getTime();
+        const timeElapsed = currentTime - this.current_question_time;
+        this.timeLeft = 20 * 60 * 1000 - timeElapsed;
+        if (this.timeLeft <= 0) {
+          this.timeLeft = 0;
+          clearInterval(this.timer);
+        }
+        this.updateTimeDisplay();
+      }, 1000);
+    },
+    updateTimeDisplay() {
+      const minutes = Math.floor(this.timeLeft / (60 * 1000));
+      const seconds = Math.floor((this.timeLeft % (60 * 1000)) / 1000);
+
+      this.timeDisplay = `${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     },
     async getCurrentQuestion() {
       const result = await projectFirestore
@@ -234,6 +270,9 @@ export default {
       if (result == null) return;
       this.currentQuestion = result.data();
     },
+  },
+  beforeDestroy() {
+    if (this.timer) clearInterval(this.timer);
   },
 };
 </script>
