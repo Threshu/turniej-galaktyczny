@@ -80,6 +80,7 @@
             >Rozpocznij grę</v-btn
           >
         </v-col>
+        <!--<Timer />-->
         <v-col class="d-flex justify-content-center align-items-center">
           <v-btn
             color="primaryLight"
@@ -209,8 +210,12 @@
 </template>
 
 <script>
+import Timer from "../Timer.vue";
 import { projectFirestore } from "../../firebase/config";
 export default {
+  components: {
+    Timer,
+  },
   data() {
     return {
       activeDiffBtn: 1,
@@ -235,9 +240,26 @@ export default {
       NORMAL: 2,
       HARD: 3,
       showAnswer: false,
+      startDate: null,
+      timerStartTime: 0,
+      countdownDuration: 1200, // 20 minut * 60 sekund
+      now: Math.floor(Date.now() / 1000),
     };
   },
   computed: {
+    countdown() {
+      const elapsed = this.now - this.timerStartTime;
+      console.log(elapsed);
+      let remaining = this.countdownDuration - elapsed;
+      if (remaining < 0) {
+        remaining = 0;
+      }
+      const minutes = Math.floor(remaining / 60);
+      const seconds = remaining % 60;
+      return `${minutes.toString().padStart(2, "0")}:${seconds
+        .toString()
+        .padStart(2, "0")}`;
+    },
     random_question_text() {
       return this.randomQuestion?.question;
     },
@@ -265,6 +287,8 @@ export default {
         .get();
       const game = result.data();
       this.scores = [...game.players];
+      const time = game.startDate;
+      this.timerStartTime = time.seconds;
     },
     async setQuestionConfig(difficultyLvl) {
       await this.getAllQuestions(difficultyLvl);
@@ -307,17 +331,25 @@ export default {
       this.setQuestionsIds();
       this.getRandomQuestionId();
       await this.getRandomQuestion();
+      this.startDate = new Date();
       await this.updateGame();
+      this.now = Math.floor(Date.now() / 1000);
+      this.intervalId = setInterval(() => {
+        this.updateTimer();
+      }, 1000);
       setTimeout(() => {
         this.startLoader = false;
         this.gameStarted = true;
       }, 500);
+      this.startDate = null;
+      await this.getCurrentGame();
     },
     async updateGame() {
       const gameDetails = {
         players: [...this.scores],
         questionId: this.questionRandomId,
         showAnswer: this.showAnswer,
+        startDate: this.startDate,
       };
       const documentRef = projectFirestore.collection("game").doc(this.gameId);
       await documentRef.update(gameDetails);
@@ -380,6 +412,9 @@ export default {
     async showAnswerFn() {
       this.showAnswer = !this.showAnswer;
       await this.updateGame();
+    },
+    updateTimer() {
+      this.now++;
     },
   },
 };
