@@ -8,7 +8,7 @@
         class="close-btn"
         @click="$emit('close')"
       >
-        <v-icon size="45">mdi-close</v-icon>
+        <v-icon size="2.5vw">mdi-close</v-icon>
       </v-btn>
       <v-card-title class="text-center font-bold"> TOP 10 </v-card-title>
       <v-card-text class="w-100 m-auto my-2">
@@ -89,14 +89,13 @@ export default {
   border-radius: 0 !important;
 
   .v-card-title {
-    font-size: 53px;
+    font-size: 3.3vw;
     line-height: normal !important;
   }
 
   .v-card-text {
-    font-size: 30px;
+    font-size: 1.7vw;
     line-height: 1.2;
-    font-family: "Montserrat", Arial, sans-serif;
     height: calc(100% - 200px);
   }
 }

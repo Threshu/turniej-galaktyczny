@@ -17,13 +17,13 @@ export default {
 <style lang="scss">
 @import "../../../styles/variables.scss";
 .title-main {
-  font-size: 148px;
+  font-size: 7.7vw;
   line-height: 0.6;
   color: $primaryLight;
 }
 
 .subtitle-main {
-  font-size: 64px;
+  font-size: 3.3vw;
   color: $primaryLight;
 }
 </style>

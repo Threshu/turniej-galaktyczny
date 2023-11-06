@@ -98,7 +98,7 @@
         </transition>
         <div class="w-25 mt-15 m-auto answer-btn">
           <v-btn
-            size="70"
+            size="5vw"
             class="font-bold"
             rounded
             block
@@ -199,7 +199,7 @@ export default {
 
 .questions-page {
   .answer-btn {
-    font-size: 30px;
+    font-size: 1.8vw;
   }
 
   .bad-answer {

@@ -5,7 +5,7 @@
         <v-btn
           class="main-page-btn font-bold text-white w-50"
           elevation="9"
-          size="50"
+          size="3vw"
           @click="changePage(btn)"
           >{{ btn.title }}</v-btn
         >

@@ -8,14 +8,14 @@
         class="close-btn"
         @click="$emit('close')"
       >
-        <v-icon size="45">mdi-close</v-icon>
+        <v-icon size="2.5vw">mdi-close</v-icon>
       </v-btn>
       <v-card-title class="text-center font-bold"> Jak grać </v-card-title>
       <v-card-text>
         <v-row
           v-for="rule in rules"
           :key="rule.number"
-          class="py-5 d-flex align-items-center"
+          class="py-7 d-flex align-items-center"
           no-gutters
         >
           <v-col cols="2" class="w-100 text-center">
@@ -76,19 +76,18 @@ export default {
   border-radius: 0 !important;
 
   .v-card-title {
-    font-size: 53px;
+    font-size: 3.3vw;
     line-height: normal !important;
   }
 
   .rule-number {
-    font-size: 70px;
+    font-size: 3.5vw;
   }
 
   .rule-text {
     color: black;
-    font-size: 21px;
+    font-size: 1vw;
     line-height: 1.3;
-    font-family: "Montserrat", Arial, sans-serif;
   }
 }
 </style>
