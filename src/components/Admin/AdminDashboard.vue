@@ -18,7 +18,9 @@
         :fixed-header="true"
       >
         <template #top>
-          <div class="w-100 text-center font-bold header-label pb-10">PUNKTACJA</div>
+          <div class="w-100 text-center font-bold header-label pb-10">
+            PUNKTACJA
+          </div>
         </template>
         <template #headers></template>
         <template #bottom>
@@ -41,7 +43,9 @@
                 <template v-slot:prepend-inner>
                   <v-icon
                     :color="item.nick !== '' ? 'primaryLight' : undefined"
-                    :icon="item.nick !== '' ? 'mdi-check-bold' : 'mdi-alert-circle'"
+                    :icon="
+                      item.nick !== '' ? 'mdi-check-bold' : 'mdi-alert-circle'
+                    "
                   />
                 </template>
               </v-text-field>
@@ -68,12 +72,20 @@
       </v-data-table>
       <div class="w-100 d-flex mt-5">
         <v-col class="d-flex justify-content-center align-items-center">
-          <v-btn color="primaryLight" :loading="startLoader" rounded @click="startGame"
+          <v-btn
+            color="primaryLight"
+            :loading="startLoader"
+            rounded
+            @click="startGame"
             >Rozpocznij grę</v-btn
           >
         </v-col>
         <v-col class="d-flex justify-content-center align-items-center">
-          <v-btn color="primaryLight" :loading="endLoader" rounded @click="endGame"
+          <v-btn
+            color="primaryLight"
+            :loading="endLoader"
+            rounded
+            @click="endGame"
             >Zakończ grę</v-btn
           >
         </v-col>
@@ -104,12 +116,17 @@
               <div class="d-flex flex-column h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
                   <div
-                    v-if="activeDiffBtn === EASY && random_question_correct_type === EASY"
+                    v-if="
+                      activeDiffBtn === EASY &&
+                      random_question_correct_type === EASY
+                    "
                   >
                     <div class="title pa-5 pt-0 text-center">
                       {{ random_question_text }}
                     </div>
-                    <div class="w-100 d-flex justify-content-space-evenly title">
+                    <div
+                      class="w-100 d-flex justify-content-space-evenly title"
+                    >
                       <v-col
                         v-for="answer in random_question_answers"
                         class="text-center"
@@ -119,12 +136,15 @@
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
                       Odpowiedź:
-                      <span class="font-bold">{{ random_question_correct_answer }}</span>
+                      <span class="font-bold">{{
+                        random_question_correct_answer
+                      }}</span>
                     </div>
                   </div>
                   <div
                     v-else-if="
-                      activeDiffBtn === NORMAL && random_question_correct_type === NORMAL
+                      activeDiffBtn === NORMAL &&
+                      random_question_correct_type === NORMAL
                     "
                   >
                     <div class="title pa-5 pt-0 text-center">
@@ -135,12 +155,16 @@
                         v-for="(answer, index) in random_question_answers"
                         class="text-center"
                       >
-                        <div class="subtitle">{{ alphabet[index] }}. {{ answer }}</div>
+                        <div class="subtitle">
+                          {{ alphabet[index] }}. {{ answer }}
+                        </div>
                       </v-col>
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
                       Odpowiedź:
-                      <span class="font-bold">{{ random_question_correct_answer }}</span>
+                      <span class="font-bold">{{
+                        random_question_correct_answer
+                      }}</span>
                     </div>
                   </div>
                   <div v-else>
@@ -149,7 +173,9 @@
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
                       Odpowiedź:
-                      <span class="font-bold">{{ random_question_correct_answer }}</span>
+                      <span class="font-bold">{{
+                        random_question_correct_answer
+                      }}</span>
                     </div>
                   </div>
                 </transition>
@@ -157,8 +183,8 @@
             </template>
             <template v-else>
               <div class="title pa-5 text-center">
-                Rozpocznij grę, aby zobaczyć pytanie. Pamiętaj o wyborze trudności
-                pytania!
+                Rozpocznij grę, aby zobaczyć pytanie. Pamiętaj o wyborze
+                trudności pytania!
               </div>
             </template>
           </transition>
@@ -167,10 +193,14 @@
       <div class="w-100 d-flex justify-content-center mt-5">
         <transition name="question" mode="out-in">
           <template v-if="!showAnswer">
-            <v-btn color="primaryLight" rounded @click="showAnswerFn">Pokaż odpowiedź</v-btn>
+            <v-btn color="primaryLight" rounded @click="showAnswerFn"
+              >Pokaż odpowiedź</v-btn
+            >
           </template>
           <template v-else>
-            <v-btn color="error" rounded @click="showAnswerFn">Ukryj odpowiedź</v-btn>
+            <v-btn color="error" rounded @click="showAnswerFn"
+              >Ukryj odpowiedź</v-btn
+            >
           </template>
         </transition>
       </div>
@@ -229,12 +259,18 @@ export default {
   },
   methods: {
     async getCurrentGame() {
-      const result = await projectFirestore.collection("game").doc(this.gameId).get();
+      const result = await projectFirestore
+        .collection("game")
+        .doc(this.gameId)
+        .get();
       const game = result.data();
       this.scores = [...game.players];
     },
     async setQuestionConfig(difficultyLvl) {
       await this.getAllQuestions(difficultyLvl);
+      this.setQuestionsIds();
+      this.getRandomQuestionId();
+      await this.getRandomQuestion();
     },
     async getAllQuestions(difficultyLvl) {
       const querySnapshot = await projectFirestore
@@ -251,11 +287,12 @@ export default {
     addNewRecord() {
       this.scores.push({ nick: "", points: 0 });
     },
-    deleteRecord(item) {
+    async deleteRecord(item) {
       const index = this.scores.indexOf(item);
       if (index > -1) {
         this.scores.splice(index, 1);
       }
+      await this.updateGame();
     },
     async changeScore(item, value) {
       if (item?.points === 0 && value === -1) return;
