@@ -72,7 +72,7 @@
             >Rozpocznij grę</v-btn
           >
         </v-col>
-        <!--<Timer />-->
+        <Timer />
         <v-col class="d-flex justify-content-center align-items-center">
           <v-btn color="primaryLight" :loading="endLoader" rounded @click="endGame"
             >Zakończ grę</v-btn

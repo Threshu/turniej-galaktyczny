@@ -67,21 +67,27 @@
                     </div>
                     <div class="w-100 d-flex justify-content-space-evenly title">
                       <template v-for="(answer, index) in current_question_answers">
-                        <v-col v-if="index === 0" class="text-right mr-10">
-                          <div>{{ answer }}</div>
+                        <v-col
+                          v-if="index === 0"
+                          class="text-right mr-10"
+                          :class="{
+                            'answer-correct':
+                              current_question_show_answer && answer.correct,
+                          }"
+                        >
+                          <div>{{ answer.text }}</div>
                         </v-col>
-                        <v-col v-if="index === 1" class="text-left ml-10">
-                          <div>{{ answer }}</div>
+                        <v-col
+                          v-if="index === 1"
+                          class="text-left ml-10"
+                          :class="{
+                            'answer-correct':
+                              current_question_show_answer && answer.correct,
+                          }"
+                        >
+                          <div>{{ answer.text }}</div>
                         </v-col>
                       </template>
-                    </div>
-                    <div class="w-100 text-center title mt-5 px-3">
-                      <transition name="answer" mode="out-in">
-                        <span class="font-bold" v-if="current_question_show_answer">{{
-                          current_question_correct_answer
-                        }}</span>
-                        <span v-else />
-                      </transition>
                     </div>
                   </div>
                   <div
@@ -97,16 +103,16 @@
                         v-for="(answer, index) in current_question_answers"
                         class="text-center py-0"
                       >
-                        <div class="subtitle">{{ alphabet[index] }}. {{ answer }}</div>
+                        <div
+                          class="subtitle"
+                          :class="{
+                            'answer-correct':
+                              current_question_show_answer && answer.correct,
+                          }"
+                        >
+                          {{ alphabet[index] }}. {{ answer.text }}
+                        </div>
                       </v-col>
-                    </div>
-                    <div class="w-100 text-center title mt-5 px-3">
-                      <transition name="answer" mode="out-in">
-                        <span class="font-bold" v-if="current_question_show_answer">{{
-                          current_question_correct_answer
-                        }}</span>
-                        <span v-else />
-                      </transition>
                     </div>
                   </div>
                   <div
@@ -183,7 +189,13 @@ export default {
       return this.currentQuestion?.question;
     },
     current_question_answers() {
-      return this.currentQuestion?.answers;
+      const answers = this.currentQuestion?.answers;
+      return answers.map((answer) => {
+        return {
+          correct: answer === this.current_question_correct_answer,
+          text: answer,
+        };
+      });
     },
     current_question_correct_answer() {
       return this.currentQuestion?.correctAnswer;

@@ -121,7 +121,7 @@ body {
 
 	.questionBox {
 		.title {
-			font-size: 30px;
+			font-size: 35px;
 		}
 
 		.subtitle {
@@ -736,4 +736,9 @@ body {
   font-weight: bold;
   font-size: 50px !important;
   text-shadow: 0 0 5px $white;
+}
+
+.answer-correct {
+	font-weight: bold;
+	text-shadow: 0 0 5px $white;
 }
