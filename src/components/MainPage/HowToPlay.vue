@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex w-100 h-75">
+  <div class="d-flex w-100">
     <v-card class="w-80 how-to-play py-5" color="white">
       <v-btn
         elevation="0"
