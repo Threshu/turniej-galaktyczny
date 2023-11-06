@@ -51,7 +51,8 @@ export default {
   computed: {
     players_to_display() {
       const players = [...this.players];
-      return this.assignPlaces(players);
+      const top10 = players.slice(0, 10);
+      return this.assignPlaces(top10);
     },
   },
   async mounted() {

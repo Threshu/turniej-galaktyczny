@@ -3,7 +3,7 @@
     <div id="stars"></div>
     <div id="stars2"></div>
     <div id="stars3"></div>
-    <template v-if="current_question_id">
+    <template v-if="current_question_id && !loader">
       <v-col class="table-section">
         <v-data-table
           :headers="headers"
@@ -140,7 +140,7 @@
         </div>
       </v-col>
     </template>
-    <template v-else>
+    <template v-else-if="!loader">
       <div class="w-100 d-flex align-items-center">
         <Ratings class="justify-content-center" @close="$emit('changePage', 'main')" />
       </div>

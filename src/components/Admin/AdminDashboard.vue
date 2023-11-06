@@ -165,7 +165,14 @@
         </v-card>
       </div>
       <div class="w-100 d-flex justify-content-center mt-5">
-        <v-btn color="primaryLight" rounded @click="showAnswerFn">Pokaż odpowiedź</v-btn>
+        <transition name="question" mode="out-in">
+          <template v-if="!showAnswer">
+            <v-btn color="primaryLight" rounded @click="showAnswerFn">Pokaż odpowiedź</v-btn>
+          </template>
+          <template v-else>
+            <v-btn color="error" rounded @click="showAnswerFn">Ukryj odpowiedź</v-btn>
+          </template>
+        </transition>
       </div>
     </v-col>
   </div>
@@ -228,9 +235,6 @@ export default {
     },
     async setQuestionConfig(difficultyLvl) {
       await this.getAllQuestions(difficultyLvl);
-      this.setQuestionsIds();
-      this.getRandomQuestionId();
-      await this.getRandomQuestion();
     },
     async getAllQuestions(difficultyLvl) {
       const querySnapshot = await projectFirestore
@@ -263,6 +267,9 @@ export default {
     },
     async startGame() {
       this.startLoader = true;
+      this.setQuestionsIds();
+      this.getRandomQuestionId();
+      await this.getRandomQuestion();
       await this.updateGame();
       setTimeout(() => {
         this.startLoader = false;
@@ -313,6 +320,7 @@ export default {
       };
       const documentRef = projectFirestore.collection("game").doc(this.gameId);
       await documentRef.update(gameDetails);
+      this.questionRandomId = null;
     },
     getRandomQuestionId() {
       if (!this.questionsIds.length) return;
