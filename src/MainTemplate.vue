@@ -1,6 +1,10 @@
 <template>
   <transition name="route" mode="out-in">
-    <component :is="getComponent()" @changePage="changePage" />
+    <component
+      :is="getComponent()"
+      @changePage="changePage"
+      :show-game-btn="showGameBtn"
+    />
   </transition>
 </template>
 <script>
@@ -14,6 +18,12 @@ const TABS = {
   [PAGES.NEW_GAME]: NewGame,
 };
 export default {
+  props: {
+    showGameBtn: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       selectedTab: "main",

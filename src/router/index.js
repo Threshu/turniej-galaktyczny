@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
   {
     path: '/',
-  name: "Website",
     component: () => import('../MainTemplate.vue'),
   },
   {
@@ -14,8 +13,9 @@ const routes = [
   },
   {
     path: '/zagraj',
-    name: 'NewGame',
-    component: () => import('../components/NewGame/NewGame.vue'),
+    name: 'MainTemplate',
+    component: () => import('../MainTemplate.vue'),
+    props: { showGameBtn: true }
   }
 ];
 

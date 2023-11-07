@@ -1,14 +1,13 @@
 <template>
   <div class="w-100 h-100 d-flex">
-    <v-col
-      cols="6"
-      class="d-flex align-items-end justify-content-center flex-column"
-    >
+    <v-col cols="6" class="d-flex justify-content-center flex-column">
       <div
-        v-for="btn in mainPageButtons"
-        class="w-100 d-flex justify-content-end mr-10"
+        v-for="btn in main_page_btns"
+        :key="btn.componentName"
+        class="w-100 d-flex justify-content-center"
       >
         <v-btn
+          v-if="btn.show"
           class="main-page-btn font-bold text-white w-50"
           elevation="9"
           size="3vw"
@@ -35,24 +34,43 @@ const TABS = {
   [MAIN_PAGE_TABS.RATINGS]: Ratings,
 };
 export default {
-  data() {
-    return {
-      selectedTab: null,
-      mainPageButtons: [
+  props: {
+    showGameBtn: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    main_page_btns() {
+      return [
+        {
+          title: "Gra",
+          componentName: "newGame",
+          emit: true,
+          show: this.showGameBtn,
+        },
         {
           title: "Jak grać",
           componentName: "howToPlay",
+          show: true,
         },
         {
           title: "Ranking graczy",
           componentName: "ratings",
+          show: true,
         },
         {
           title: "Pytania",
           componentName: "questions",
           emit: true,
+          show: true,
         },
-      ],
+      ];
+    },
+  },
+  data() {
+    return {
+      selectedTab: null,
     };
   },
   methods: {

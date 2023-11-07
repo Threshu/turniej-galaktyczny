@@ -150,7 +150,7 @@
                     v-else-if="current_question_id == null"
                     class="title pa-5 pt-0 text-center"
                   >
-                    Pytanie nie zostało wczytane
+                    Pytanie
                   </div>
                 </transition>
               </div>
@@ -175,10 +175,11 @@
         class="ma-2"
         icon
         color="primaryLight"
-        size="100"
-        @click="$router.push({ name: 'Website' })"
-        ><v-icon size="65">mdi-arrow-left</v-icon></v-btn
+        size="2.5vw"
+        @click="reloadPage"
       >
+        <v-icon size="2vw">mdi-arrow-left</v-icon>
+      </v-btn>
     </div>
   </section>
 </template>
@@ -267,6 +268,9 @@ export default {
             this.startCountdown();
           }
         });
+    },
+    reloadPage() {
+      window.location.reload();
     },
     startCountdown() {
       if (this.timer) clearInterval(this.timer);
