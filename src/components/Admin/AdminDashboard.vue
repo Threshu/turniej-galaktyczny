@@ -228,7 +228,7 @@ export default {
   data() {
     return {
       timer: null,
-      activeDiffBtn: 1,
+      activeDiffBtn: null,
       timeLeft: 20 * 60 * 1000, // 20 minutes in milliseconds
       timeDisplay: "--:--",
       headers: [
@@ -330,11 +330,9 @@ export default {
     async startGame() {
       this.startLoader = true;
       this.startCountdown();
-      this.setQuestionsIds();
-      this.getRandomQuestionId();
-      await this.getRandomQuestion();
       const now = new Date();
       this.startDate = now.getTime();
+      this.questionRandomId = null;
       await this.updateGame();
       setTimeout(() => {
         this.startLoader = false;
@@ -381,6 +379,7 @@ export default {
       this.timeDisplay = "20:00";
       this.gameStarted = false;
       this.showAnswer = false;
+      this.activeDiffBtn = null;
     },
     async saveEndGameData() {
       this.endLoader = true;
@@ -429,9 +428,9 @@ export default {
       this.randomQuestion = result.data();
     },
     async getQuestion(number) {
+      if (!this.gameStarted) return;
       this.activeDiffBtn = number;
       await this.setQuestionConfig(number);
-      if (!this.gameStarted) return;
       this.showAnswer = false;
       await this.updateGame();
     },

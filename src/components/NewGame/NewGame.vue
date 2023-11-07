@@ -3,7 +3,7 @@
     <div id="stars"></div>
     <div id="stars2"></div>
     <div id="stars3"></div>
-    <template v-if="current_question_id && !loader">
+    <template v-if="current_question_time && !loader">
       <v-col class="table-section px-10">
         <v-data-table
           :headers="headers"
@@ -19,7 +19,9 @@
           :fixed-header="true"
         >
           <template #top>
-            <div class="w-100 text-center font-bold header-label pb-10">PUNKTACJA</div>
+            <div class="w-100 text-center font-bold header-label pb-10">
+              PUNKTACJA
+            </div>
           </template>
           <template #headers></template>
           <template #bottom></template>
@@ -47,7 +49,8 @@
             ><span
               :class="{
                 'diff-btn-active':
-                  current_question_type === number && current_question_id != null,
+                  current_question_type === number &&
+                  current_question_id != null,
               }"
               style="font-size: 35px"
               >{{ number }}</span
@@ -60,13 +63,20 @@
               <div class="d-flex flex-column h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
                   <div
-                    v-if="current_question_type === EASY && current_question_id != null"
+                    v-if="
+                      current_question_type === EASY &&
+                      current_question_id != null
+                    "
                   >
                     <div class="title pa-5 pt-0 text-center">
                       {{ current_question_text }}
                     </div>
-                    <div class="w-100 d-flex justify-content-space-evenly title">
-                      <template v-for="(answer, index) in current_question_answers">
+                    <div
+                      class="w-100 d-flex justify-content-space-evenly title"
+                    >
+                      <template
+                        v-for="(answer, index) in current_question_answers"
+                      >
                         <v-col
                           v-if="index === 0"
                           class="text-right mr-10"
@@ -92,7 +102,8 @@
                   </div>
                   <div
                     v-else-if="
-                      current_question_type === NORMAL && current_question_id != null
+                      current_question_type === NORMAL &&
+                      current_question_id != null
                     "
                   >
                     <div class="title pa-5 pt-0 text-center">
@@ -117,7 +128,8 @@
                   </div>
                   <div
                     v-else-if="
-                      current_question_type === HARD && current_question_id != null
+                      current_question_type === HARD &&
+                      current_question_id != null
                     "
                   >
                     <div class="title pa-5 pt-0 text-center">
@@ -125,9 +137,11 @@
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
                       <transition name="answer" mode="out-in">
-                        <span class="font-bold" v-if="current_question_show_answer">{{
-                          current_question_correct_answer
-                        }}</span>
+                        <span
+                          class="font-bold"
+                          v-if="current_question_show_answer"
+                          >{{ current_question_correct_answer }}</span
+                        >
                         <span v-else />
                       </transition>
                     </div>
@@ -150,7 +164,10 @@
     </template>
     <template v-else-if="!loader">
       <div class="w-100 d-flex align-items-center">
-        <Ratings class="justify-content-center" @close="$emit('changePage', 'main')" />
+        <Ratings
+          class="justify-content-center"
+          @close="$emit('changePage', 'main')"
+        />
       </div>
     </template>
   </section>
@@ -258,9 +275,9 @@ export default {
       const minutes = Math.floor(this.timeLeft / (60 * 1000));
       const seconds = Math.floor((this.timeLeft % (60 * 1000)) / 1000);
 
-      this.timeDisplay = `${minutes
+      this.timeDisplay = `${minutes.toString().padStart(2, "0")}:${seconds
         .toString()
-        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        .padStart(2, "0")}`;
     },
     async getCurrentQuestion() {
       const result = await projectFirestore
