@@ -117,7 +117,7 @@
       <div class="w-100 h-50 px-2 pt-5">
         <v-card color="primaryLight" class="h-100 questionBox">
           <transition name="question" mode="out-in">
-            <template v-if="gameStarted">
+            <template v-if="gameStarted && questionRandomId != null">
               <div class="d-flex flex-column h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
                   <div
