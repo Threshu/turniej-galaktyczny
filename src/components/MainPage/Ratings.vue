@@ -13,26 +13,35 @@
       <v-card-title class="text-center font-bold"> TOP 10 </v-card-title>
       <v-card-text class="w-100 m-auto my-2">
         <template v-if="!loader">
-          <v-row
-            v-for="player in players_to_display"
-            :key="player.id"
-            class="pb-4 d-flex align-items-center"
-            no-gutters
-          >
-            <v-col cols="2" class="w-100 text-center">
-              <div v-text="`${player.place}.`" />
-            </v-col>
-            <v-col cols="8">
-              <div v-text="player.nick" />
-            </v-col>
-            <v-col cols="2">
-              <div class="font-bold" v-text="player.points" />
-            </v-col>
-          </v-row>
+          <template v-if="players_to_display.length > 0">
+            <v-row
+              v-for="player in players_to_display"
+              :key="player.id"
+              class="pb-4 d-flex align-items-center"
+              no-gutters
+            >
+              <v-col cols="2" class="w-100 text-center">
+                <div v-text="`${player.place}.`" />
+              </v-col>
+              <v-col cols="8">
+                <div v-text="player.nick" />
+              </v-col>
+              <v-col cols="2">
+                <div class="font-bold" v-text="player.points" />
+              </v-col>
+            </v-row>
+          </template>
         </template>
         <template v-else>
-          <div class="w-100 h-100 d-flex justify-content-center align-items-center">
-            <v-progress-circular :size="70" :width="7" color="white" indeterminate />
+          <div
+            class="w-100 h-100 d-flex justify-content-center align-items-center"
+          >
+            <v-progress-circular
+              :size="70"
+              :width="7"
+              color="white"
+              indeterminate
+            />
           </div>
         </template>
       </v-card-text>
