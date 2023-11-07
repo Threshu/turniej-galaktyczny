@@ -18,7 +18,9 @@
         :fixed-header="true"
       >
         <template #top>
-          <div class="w-100 text-center font-bold header-label pb-10">PUNKTACJA</div>
+          <div class="w-100 text-center font-bold header-label pb-10">
+            PUNKTACJA
+          </div>
         </template>
         <template #headers></template>
         <template #bottom>
@@ -41,7 +43,9 @@
                 <template v-slot:prepend-inner>
                   <v-icon
                     :color="item.nick !== '' ? 'primaryLight' : undefined"
-                    :icon="item.nick !== '' ? 'mdi-check-bold' : 'mdi-alert-circle'"
+                    :icon="
+                      item.nick !== '' ? 'mdi-check-bold' : 'mdi-alert-circle'
+                    "
                   />
                 </template>
               </v-text-field>
@@ -117,12 +121,17 @@
               <div class="d-flex flex-column h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
                   <div
-                    v-if="activeDiffBtn === EASY && random_question_correct_type === EASY"
+                    v-if="
+                      activeDiffBtn === EASY &&
+                      random_question_correct_type === EASY
+                    "
                   >
                     <div class="title pa-5 pt-0 text-center">
                       {{ random_question_text }}
                     </div>
-                    <div class="w-100 d-flex justify-content-space-evenly title">
+                    <div
+                      class="w-100 d-flex justify-content-space-evenly title"
+                    >
                       <v-col
                         v-for="answer in random_question_answers"
                         class="text-center"
@@ -132,12 +141,15 @@
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
                       Odpowiedź:
-                      <span class="font-bold">{{ random_question_correct_answer }}</span>
+                      <span class="font-bold">{{
+                        random_question_correct_answer
+                      }}</span>
                     </div>
                   </div>
                   <div
                     v-else-if="
-                      activeDiffBtn === NORMAL && random_question_correct_type === NORMAL
+                      activeDiffBtn === NORMAL &&
+                      random_question_correct_type === NORMAL
                     "
                   >
                     <div class="title pa-5 pt-0 text-center">
@@ -148,12 +160,16 @@
                         v-for="(answer, index) in random_question_answers"
                         class="text-center"
                       >
-                        <div class="subtitle">{{ alphabet[index] }}. {{ answer }}</div>
+                        <div class="subtitle">
+                          {{ alphabet[index] }}. {{ answer }}
+                        </div>
                       </v-col>
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
                       Odpowiedź:
-                      <span class="font-bold">{{ random_question_correct_answer }}</span>
+                      <span class="font-bold">{{
+                        random_question_correct_answer
+                      }}</span>
                     </div>
                   </div>
                   <div v-else>
@@ -162,7 +178,9 @@
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
                       Odpowiedź:
-                      <span class="font-bold">{{ random_question_correct_answer }}</span>
+                      <span class="font-bold">{{
+                        random_question_correct_answer
+                      }}</span>
                     </div>
                   </div>
                 </transition>
@@ -170,8 +188,8 @@
             </template>
             <template v-else>
               <div class="title pa-5 text-center">
-                Rozpocznij grę, aby zobaczyć pytanie. Pamiętaj o wyborze trudności
-                pytania!
+                Rozpocznij grę, aby zobaczyć pytanie. Pamiętaj o wyborze
+                trudności pytania!
               </div>
             </template>
           </transition>
@@ -190,7 +208,9 @@
             >
           </template>
           <template v-else>
-            <v-btn color="error" rounded @click="showAnswerFn">Ukryj odpowiedź</v-btn>
+            <v-btn color="error" rounded @click="showAnswerFn"
+              >Ukryj odpowiedź</v-btn
+            >
           </template>
         </transition>
       </div>
@@ -257,7 +277,10 @@ export default {
   },
   methods: {
     async getCurrentGame() {
-      const result = await projectFirestore.collection("game").doc(this.gameId).get();
+      const result = await projectFirestore
+        .collection("game")
+        .doc(this.gameId)
+        .get();
       const game = result.data();
       this.scores = [...game.players];
       if (this.scores?.length > 0) this.gameStarted = true;
@@ -345,9 +368,9 @@ export default {
       const minutes = Math.floor(this.timeLeft / (60 * 1000));
       const seconds = Math.floor((this.timeLeft % (60 * 1000)) / 1000);
 
-      this.timeDisplay = `${minutes
+      this.timeDisplay = `${minutes.toString().padStart(2, "0")}:${seconds
         .toString()
-        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        .padStart(2, "0")}`;
     },
     async endGame() {
       if (!this.gameStarted) return;
@@ -357,6 +380,7 @@ export default {
       clearInterval(this.timer);
       this.timeDisplay = "20:00";
       this.gameStarted = false;
+      this.showAnswer = false;
     },
     async saveEndGameData() {
       this.endLoader = true;
@@ -408,6 +432,7 @@ export default {
       this.activeDiffBtn = number;
       await this.setQuestionConfig(number);
       if (!this.gameStarted) return;
+      this.showAnswer = false;
       await this.updateGame();
     },
     async showAnswerFn() {

@@ -1,29 +1,21 @@
 <template>
-  <div>
-    <span v-text="tournament" class="title-main font-bold d-block" />
-    <span v-text="galactic" class="subtitle-main font-bold d-block" />
+  <div class="w-100">
+    <img src="../../../logo.png" class="fit-picture" v-if="shine" />
+    <img src="../../../logo-shine.png" class="fit-picture" v-else />
+    <v-switch v-model="shine" color="primary" />
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      tournament: "TURNIEJ",
-      galactic: "GALAKTYCZNY",
+      shine: false,
     };
   },
 };
 </script>
-<style lang="scss">
-@import "../../../styles/variables.scss";
-.title-main {
-  font-size: 7.7vw;
-  line-height: 0.6;
-  color: $primaryLight;
-}
-
-.subtitle-main {
-  font-size: 3.3vw;
-  color: $primaryLight;
+<style>
+.fit-picture {
+  width: 100%;
 }
 </style>
