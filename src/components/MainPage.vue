@@ -1,7 +1,13 @@
 <template>
   <div class="w-100 h-100 d-flex">
-    <v-col cols="6" class="d-flex align-items-end justify-content-center flex-column">
-      <div v-for="btn in mainPageButtons" class="w-100 d-flex justify-content-end mr-10">
+    <v-col
+      cols="6"
+      class="d-flex align-items-end justify-content-center flex-column"
+    >
+      <div
+        v-for="btn in mainPageButtons"
+        class="w-100 d-flex justify-content-end mr-10"
+      >
         <v-btn
           class="main-page-btn font-bold text-white w-50"
           elevation="9"
@@ -33,11 +39,6 @@ export default {
     return {
       selectedTab: null,
       mainPageButtons: [
-        {
-          title: "Nowa gra",
-          componentName: "newGame",
-          emit: true,
-        },
         {
           title: "Jak grać",
           componentName: "howToPlay",

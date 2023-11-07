@@ -4,12 +4,18 @@ import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
   {
     path: '/',
+  name: "Website",
     component: () => import('../MainTemplate.vue'),
   },
   {
     path: '/galaktyczny-admin',
     name: 'AdminDashboard',
     component: () => import('../components/Admin/AdminDashboard.vue'),
+  },
+  {
+    path: '/zagraj',
+    name: 'NewGame',
+    component: () => import('../components/NewGame/NewGame.vue'),
   }
 ];
 

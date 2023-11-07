@@ -1,5 +1,5 @@
 <template>
-  <section class="wrapper w-100 d-flex">
+  <section style="position: relative" class="wrapper w-100 d-flex">
     <div id="stars"></div>
     <div id="stars2"></div>
     <div id="stars3"></div>
@@ -170,6 +170,16 @@
         />
       </div>
     </template>
+    <div class="roll-wrapper roll-right-new-game">
+      <v-btn
+        class="ma-2"
+        icon
+        color="primaryLight"
+        size="100"
+        @click="$router.push({ name: 'Website' })"
+        ><v-icon size="65">mdi-arrow-left</v-icon></v-btn
+      >
+    </div>
   </section>
 </template>
 <script>

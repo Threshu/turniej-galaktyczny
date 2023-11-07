@@ -93,7 +93,12 @@
             v-else-if="current_question_text == null"
             class="question-text pa-5 pt-0 text-center answer-text"
           >
-            <v-progress-circular :size="70" :width="7" color="primary" indeterminate />
+            <v-progress-circular
+              :size="70"
+              :width="7"
+              color="primary"
+              indeterminate
+            />
           </div>
         </transition>
         <div class="w-25 mt-15 m-auto answer-btn">
@@ -204,21 +209,6 @@ export default {
 
   .bad-answer {
     color: lightgray;
-  }
-
-  .roll-wrapper {
-    position: absolute;
-    bottom: 5px;
-  }
-
-  .roll-right {
-    right: 5px;
-    transform: translate(-100%, -50%);
-  }
-
-  .roll-left {
-    left: 5px;
-    transform: translate(0%, -25%);
   }
 
   .difficult-lvl {
