@@ -15,7 +15,7 @@
         <v-row
           v-for="rule in rules"
           :key="rule.number"
-          class="py-7 d-flex align-items-center"
+          class="py-5 d-flex align-items-center"
           no-gutters
         >
           <v-col cols="2" class="w-100 text-center">
@@ -35,28 +35,27 @@ export default {
     return {
       rules: [
         {
-          text:
-            "Rzuć kostką i wybierz gracza, który wykona ruch zgodny z rzutem - masz na to tylko 10 sekund!",
+          text: "Rzuć kostką i wybierz gracza, który wykona ruch zgodny z rzutem - masz na to tylko 10 sekund!",
           number: 1,
         },
         {
-          text:
-            "Gracz przechodzi na wskazane pole i odpowiada na pytanie z kategorii zgodnej z cyfrą Żappsa.",
+          text: "Gracz przechodzi na wskazane pole i odpowiada na pytanie z kategorii zgodnej z cyfrą Żappsa.",
           number: 2,
         },
         {
-          text:
-            "Udzielił dobrej odpowiedzi? Świetnie, zgarnia tyle punktów ile na polu wskazuje Żapps!",
+          text: "Udzielił dobrej odpowiedzi? Świetnie, zgarnia tyle punktów ile na polu wskazuje Żapps!",
           number: 3,
         },
         {
           text: "Następny w kolejności gracz rzuca kostką i wybiera gracza...",
           number: 4,
         },
-        { text: "Uważajcie na strzałki! Potrafią zrobić psikusa...", number: 5 },
         {
-          text:
-            "Gra kończy się kiedy na planszy pozostanie 1 gracz lub po upływie 20 minut.",
+          text: "Uważajcie na strzałki! Potrafią zrobić psikusa...",
+          number: 5,
+        },
+        {
+          text: "Gra kończy się kiedy na planszy pozostanie 1 gracz lub po upływie 20 minut.",
           number: 6,
         },
         {

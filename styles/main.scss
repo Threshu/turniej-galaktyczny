@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext");
 
 html {
-	overflow: hidden !important;
+	overflow: auto !important;
 }
 
 body {
@@ -72,6 +72,10 @@ body {
 
 .mh-75 {
 	min-height: 75vh;
+}
+
+.h-60 {
+	height: 60%;
 }
 
 .h-75 {

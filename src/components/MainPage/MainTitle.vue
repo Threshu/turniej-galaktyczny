@@ -4,7 +4,7 @@
     <div class="text-black logo-text mt-5 text-center">
       Weź udział w galaktycznym turnieju i rywalizuj z innymi graczami
       korzystając ze swojej wiedzy oraz sprytu. Zdobądź największą liczbę
-      punktów i zrób wrażenie na Franczyzobiorcach.
+      punktów i zrób wrażenie na franczyzobiorcach.
     </div>
   </div>
 </template>

@@ -57,7 +57,7 @@
             ></v-btn
           >
         </div>
-        <div class="w-100 h-50 px-2 pt-5">
+        <div class="w-100 h-60 px-2 pt-5">
           <v-card color="primaryLight" class="h-100 questionBox">
             <transition name="question" mode="out-in">
               <div class="d-flex flex-column h-100 justify-content-center">
@@ -132,13 +132,20 @@
                       current_question_id != null
                     "
                   >
-                    <div class="title pa-5 pt-0 text-center">
+                    <div
+                      class="pa-5 pt-0 text-center"
+                      :class="
+                        current_question_show_answer
+                          ? 'title-question-hard-small'
+                          : 'title-question-hard'
+                      "
+                    >
                       {{ current_question_text }}
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">
                       <transition name="answer" mode="out-in">
                         <span
-                          class="font-bold"
+                          class="font-bold answer-hard"
                           v-if="current_question_show_answer"
                           >{{ current_question_correct_answer }}</span
                         >
@@ -307,3 +314,16 @@ export default {
   },
 };
 </script>
+<style>
+.title-question-hard {
+  font-size: 2vw;
+}
+
+.title-question-hard-small {
+  font-size: 1.2vw;
+}
+
+.answer-hard {
+  font-size: 2vw;
+}
+</style>
