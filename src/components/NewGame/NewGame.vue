@@ -80,6 +80,7 @@
                         <v-col
                           v-if="index === 0"
                           class="text-right mr-10"
+                          :key="index"
                           :class="{
                             'answer-correct':
                               current_question_show_answer && answer.correct,
@@ -89,6 +90,7 @@
                         </v-col>
                         <v-col
                           v-if="index === 1"
+                          :key="index"
                           class="text-left ml-10"
                           :class="{
                             'answer-correct':
@@ -112,6 +114,7 @@
                     <div class="d-flex flex-column">
                       <v-col
                         v-for="(answer, index) in current_question_answers"
+                        :key="index"
                         class="text-center py-0"
                       >
                         <div
@@ -165,7 +168,11 @@
           </v-card>
         </div>
         <div class="w-100 d-flex justify-content-center mt-3">
-          <Timer :time="timeDisplay" :time-left="timeLeft" />
+          <Timer
+            :time="timeDisplay"
+            :time-left="timeLeft"
+            :interval-id="timer"
+          />
         </div>
       </v-col>
     </template>
@@ -235,7 +242,7 @@ export default {
       return this.currentQuestion?.question;
     },
     current_question_answers() {
-      const answers = this.currentQuestion?.answers;
+      const answers = this.currentQuestion?.answers ?? [];
       return answers.map((answer) => {
         return {
           correct: answer === this.current_question_correct_answer,
@@ -256,10 +263,7 @@ export default {
     current_question_id: {
       immediate: true,
       async handler() {
-        if (this.current_question_id == null) {
-          clearInterval(this.timer);
-          return;
-        }
+        if (this.current_question_id == null) return;
         await this.getCurrentQuestion();
       },
     },

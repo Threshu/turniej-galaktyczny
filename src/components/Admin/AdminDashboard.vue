@@ -188,8 +188,8 @@
             </template>
             <template v-else>
               <div class="title pa-5 text-center">
-                Rozpocznij grę, aby zobaczyć pytanie. Pamiętaj o wyborze
-                trudności pytania!
+                Rozpocznij grę i wybierz pytanie klikając na jedną z powyższych
+                kategorii.
               </div>
             </template>
           </transition>
@@ -283,8 +283,8 @@ export default {
         .get();
       const game = result.data();
       this.scores = [...game.players];
-      if (this.scores?.length > 0) this.gameStarted = true;
       if (game && game.startDate) {
+        this.gameStarted = true;
         this.startDate = new Date(game.startDate).getTime();
         this.startCountdown();
       }
