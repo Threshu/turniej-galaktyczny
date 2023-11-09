@@ -74,10 +74,6 @@ body {
 	min-height: 75vh;
 }
 
-.h-60 {
-	height: 60%;
-}
-
 .h-75 {
 	height: 75%;
 }
@@ -101,7 +97,7 @@ body {
 .table-section {
 	.header-label {
 		letter-spacing: 5px;
-		font-size: 37px;
+		font-size: 2.2vw;
 	}
 
 	td {
@@ -116,16 +112,20 @@ body {
 .question-section {
 	.label {
 		letter-spacing: 5px;
-		font-size: 49px;
+		font-size: 2.2vw;
+	}
+
+	.question-type-btn {
+		font-size: 2vw;
 	}
 
 	.questionBox {
 		.title {
-			font-size: 1vw;
+			font-size: 1.4vw;
 		}
 
 		.abcd-answers {
-			font-size: 1.5vw;
+			font-size: 2vw;
 		}
 	}
 }
@@ -772,7 +772,7 @@ body {
 
 .diff-btn-active {
 	font-weight: bold;
-	font-size: 50px !important;
+	font-size: 2.2vw !important;
 	text-shadow: 0 0 5px $white;
 }
 

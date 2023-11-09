@@ -8,7 +8,7 @@
         :headers="headers"
         :items="scores"
         style="background-color: transparent; color: white"
-        class="elevation-10 custom_table_class"
+        class="custom_table_class"
         no-data-text="Brak zapisanych zawodników"
         :height="'70vh'"
         :loading="loader"
@@ -100,21 +100,19 @@
       <div class="w-100 text-center label font-bold">PYTANIE</div>
       <div class="w-100 d-flex justify-content-center">
         <v-btn
-          class="ma-2"
+          class="ma-2 question-type-btn"
           icon
           color="primaryLight"
-          size="80"
+          size="50"
           v-for="number in 3"
           :key="number"
           @click="getQuestion(number)"
-          ><span
-            :class="{ 'diff-btn-active': activeDiffBtn === number }"
-            style="font-size: 35px"
-            >{{ number }}</span
-          ></v-btn
+          ><span :class="{ 'diff-btn-active': activeDiffBtn === number }">{{
+            number
+          }}</span></v-btn
         >
       </div>
-      <div class="w-100 h-50 px-2 pt-5">
+      <div class="w-100 h-75 px-2 pt-5">
         <v-card color="primaryLight" class="h-100 questionBox">
           <transition name="question" mode="out-in">
             <template v-if="gameStarted && questionRandomId != null">

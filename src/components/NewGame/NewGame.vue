@@ -40,10 +40,10 @@
         <div class="w-100 text-center label font-bold">PYTANIE</div>
         <div class="w-100 d-flex justify-content-center">
           <v-btn
-            class="ma-2"
+            class="ma-2 question-type-btn"
             icon
             color="primaryLight"
-            size="80"
+            size="50"
             v-for="number in 3"
             :key="number"
             ><span
@@ -52,12 +52,11 @@
                   current_question_type === number &&
                   current_question_id != null,
               }"
-              style="font-size: 35px"
               >{{ number }}</span
             ></v-btn
           >
         </div>
-        <div class="w-100 h-60 px-2 pt-5">
+        <div class="w-100 h-75 px-2 pt-5">
           <v-card color="primaryLight" class="h-100 questionBox">
             <transition name="question" mode="out-in">
               <div class="d-flex flex-column h-100 justify-content-center">
