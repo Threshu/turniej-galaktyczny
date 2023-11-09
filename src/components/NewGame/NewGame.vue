@@ -168,11 +168,7 @@
           </v-card>
         </div>
         <div class="w-100 d-flex justify-content-center mt-3">
-          <Timer
-            :time="timeDisplay"
-            :time-left="timeLeft"
-            :interval-id="timer"
-          />
+          <Timer :time="timeDisplay" :time-left="timeLeft" />
         </div>
       </v-col>
     </template>
