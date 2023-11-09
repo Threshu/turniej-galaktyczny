@@ -133,7 +133,8 @@
                       class="w-100 d-flex justify-content-space-evenly title"
                     >
                       <v-col
-                        v-for="answer in random_question_answers"
+                        v-for="(answer, index) in random_question_answers"
+                        :key="index"
                         class="text-center"
                       >
                         <div>{{ answer }}</div>
@@ -158,9 +159,10 @@
                     <div class="d-flex flex-column">
                       <v-col
                         v-for="(answer, index) in random_question_answers"
+                        :key="index"
                         class="text-center"
                       >
-                        <div class="subtitle">
+                        <div class="abcd-answers">
                           {{ alphabet[index] }}. {{ answer }}
                         </div>
                       </v-col>

@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext");
 
 html {
-	overflow: auto !important;
+	overflow: hidden !important;
 }
 
 body {
@@ -121,11 +121,11 @@ body {
 
 	.questionBox {
 		.title {
-			font-size: 35px;
+			font-size: 1vw;
 		}
 
-		.subtitle {
-			font-size: 20px;
+		.abcd-answers {
+			font-size: 1.5vw;
 		}
 	}
 }

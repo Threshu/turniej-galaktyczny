@@ -45,6 +45,7 @@
               <template v-for="(answer, index) in current_question_answers">
                 <v-col
                   v-if="index === 0"
+                  :key="index"
                   class="text-right mr-10"
                   :class="{ 'bad-answer': !answer.correct && showAnswer }"
                 >
@@ -52,6 +53,7 @@
                 </v-col>
                 <v-col
                   v-if="index === 1"
+                  :key="index"
                   class="text-left ml-10"
                   :class="{ 'bad-answer': !answer.correct && showAnswer }"
                 >
@@ -67,6 +69,7 @@
             <div class="d-flex flex-column answer-text">
               <v-col
                 v-for="(answer, index) in current_question_answers"
+                :key="index"
                 class="text-center py-0"
                 :class="{ 'bad-answer': !answer.correct && showAnswer }"
               >
@@ -103,7 +106,7 @@
         </transition>
         <div class="w-25 mt-15 m-auto answer-btn">
           <v-btn
-            size="5vw"
+            size="3vw"
             class="font-bold"
             rounded
             block
@@ -204,7 +207,7 @@ export default {
 
 .questions-page {
   .answer-btn {
-    font-size: 1.8vw;
+    font-size: 1.5vw;
   }
 
   .bad-answer {
@@ -218,17 +221,17 @@ export default {
   .question-text {
     font-weight: bold;
     color: $primary;
-    font-size: 45px;
+    font-size: 1.8vw;
   }
 
   .answer-text {
     font-weight: bold;
     color: $primaryLight;
-    font-size: 45px;
+    font-size: 1.8vw;
   }
 
   .question-subtitle {
-    font-size: 35px;
+    font-size: 1.8vw;
   }
 }
 </style>

@@ -118,7 +118,7 @@
                         class="text-center py-0"
                       >
                         <div
-                          class="subtitle"
+                          class="abcd-answers"
                           :class="{
                             'answer-correct':
                               current_question_show_answer && answer.correct,
