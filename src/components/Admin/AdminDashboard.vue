@@ -119,7 +119,7 @@
               <div class="d-flex flex-column h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
                   <div
-                    class="h-100"
+                    class="h-100 pt-3"
                     v-if="
                       activeDiffBtn === EASY &&
                       random_question_correct_type === EASY
@@ -147,7 +147,7 @@
                     </div>
                   </div>
                   <div
-                    class="h-100"
+                    class="h-100 pt-3"
                     v-else-if="
                       activeDiffBtn === NORMAL &&
                       random_question_correct_type === NORMAL
@@ -174,8 +174,8 @@
                       }}</span>
                     </div>
                   </div>
-                  <div class="h-100" v-else>
-                    <div class="title pa-5 pt-0 text-center">
+                  <div class="h-100 pt-3" v-else>
+                    <div class="pa-5 pt-0 text-center title-question-hard">
                       {{ random_question_text }}
                     </div>
                     <div class="w-100 text-center title mt-5 px-3">

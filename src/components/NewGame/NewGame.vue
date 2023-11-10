@@ -59,9 +59,7 @@
         <div class="w-100 h-60 px-2 pt-5">
           <v-card color="primaryLight" class="h-100 questionBox">
             <transition name="question" mode="out-in">
-              <div
-                class="d-flex flex-column h-100 justify-content-center py-35"
-              >
+              <div class="d-flex flex-column h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
                   <div
                     class="h-100"
