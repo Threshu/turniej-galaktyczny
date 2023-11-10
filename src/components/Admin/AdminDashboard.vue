@@ -112,13 +112,14 @@
           }}</span></v-btn
         >
       </div>
-      <div class="w-100 h-75 px-2 pt-5">
+      <div class="w-100 h-60 px-2 pt-5">
         <v-card color="primaryLight" class="h-100 questionBox">
           <transition name="question" mode="out-in">
             <template v-if="gameStarted && questionRandomId != null">
               <div class="d-flex flex-column h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
                   <div
+                    class="h-100"
                     v-if="
                       activeDiffBtn === EASY &&
                       random_question_correct_type === EASY
@@ -146,6 +147,7 @@
                     </div>
                   </div>
                   <div
+                    class="h-100"
                     v-else-if="
                       activeDiffBtn === NORMAL &&
                       random_question_correct_type === NORMAL
@@ -172,7 +174,7 @@
                       }}</span>
                     </div>
                   </div>
-                  <div v-else>
+                  <div class="h-100" v-else>
                     <div class="title pa-5 pt-0 text-center">
                       {{ random_question_text }}
                     </div>

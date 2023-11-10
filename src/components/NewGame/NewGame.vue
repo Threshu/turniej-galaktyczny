@@ -56,12 +56,15 @@
             ></v-btn
           >
         </div>
-        <div class="w-100 h-75 px-2 pt-5">
+        <div class="w-100 h-60 px-2 pt-5">
           <v-card color="primaryLight" class="h-100 questionBox">
             <transition name="question" mode="out-in">
-              <div class="d-flex flex-column h-100 justify-content-center">
+              <div
+                class="d-flex flex-column h-100 justify-content-center py-35"
+              >
                 <transition name="answer" mode="out-in">
                   <div
+                    class="h-100"
                     v-if="
                       current_question_type === EASY &&
                       current_question_id != null
@@ -102,6 +105,7 @@
                     </div>
                   </div>
                   <div
+                    class="h-100"
                     v-else-if="
                       current_question_type === NORMAL &&
                       current_question_id != null
@@ -129,6 +133,7 @@
                     </div>
                   </div>
                   <div
+                    class="h-100"
                     v-else-if="
                       current_question_type === HARD &&
                       current_question_id != null
@@ -323,6 +328,6 @@ export default {
 }
 
 .answer-hard {
-  font-size: 2vw;
+  font-size: 1.5vw;
 }
 </style>
