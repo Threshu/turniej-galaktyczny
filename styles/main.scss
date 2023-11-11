@@ -199,6 +199,19 @@ body {
 	font-size: 30px;
 }
 
+.v-pagination__item {
+	.v-btn__content {
+		font-weight: bold;
+	}
+}
+
+.v-pagination__item--is-active {
+	.rounded-circle {
+		background-color: $primaryLight;
+		color: $white !important;
+	}
+}
+
 .wrapper {
 	height: 100%;
 	overflow: hidden;

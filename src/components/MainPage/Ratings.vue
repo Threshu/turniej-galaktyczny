@@ -31,6 +31,15 @@
               </v-col>
             </v-row>
           </template>
+          <div class="text-center">
+            <v-pagination
+              v-model="page"
+              :length="num_pages"
+              rounded="circle"
+              elevation="10"
+              active-color="primaryLight"
+            />
+          </div>
         </template>
         <template v-else>
           <div
@@ -55,12 +64,18 @@ export default {
     return {
       loader: true,
       players: [],
+      page: 1,
+      itemsPerPage: 10,
     };
   },
   computed: {
+    num_pages() {
+      return Math.ceil(this.players?.length / this.itemsPerPage);
+    },
     players_to_display() {
-      const players = [...this.players];
-      return this.assignPlaces(players).slice(0, 10);
+      const start = (this.page - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.assignPlaces([...this.players]).slice(start, end);
     },
   },
   async mounted() {
