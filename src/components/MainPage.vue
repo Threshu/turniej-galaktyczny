@@ -63,7 +63,7 @@ export default {
           title: "Pytania",
           componentName: "questions",
           emit: true,
-          show: true,
+          show: this.showGameBtn,
         },
       ];
     },
