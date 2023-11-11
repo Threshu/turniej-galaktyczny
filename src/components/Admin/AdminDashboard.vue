@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 wrapper d-flex admin-dashboard">
+  <div class="w-100 wrapper d-flex">
     <div id="stars"></div>
     <div id="stars2"></div>
     <div id="stars3"></div>
@@ -113,7 +113,7 @@
         >
       </div>
       <div class="w-100 h-60 px-2 pt-5">
-        <v-card color="primaryLight" class="h-100 questionBox">
+        <v-card color="primaryLight" class="h-100">
           <transition name="question" mode="out-in">
             <template v-if="gameStarted && questionRandomId != null">
               <div class="d-flex flex-column h-100 justify-content-center">
@@ -125,11 +125,15 @@
                       random_question_correct_type === EASY
                     "
                   >
-                    <div class="title pa-5 pt-0 text-center">
+                    <div
+                      class="pa-5 pt-0 text-center"
+                      :style="{ fontSize: font_size_question + 'vw' }"
+                    >
                       {{ random_question_text }}
                     </div>
                     <div
-                      class="w-100 d-flex justify-content-space-evenly title"
+                      class="w-100 d-flex justify-content-space-evenly"
+                      :style="{ fontSize: font_size_answers + 'vw' }"
                     >
                       <v-col
                         v-for="(answer, index) in random_question_answers"
@@ -139,7 +143,10 @@
                         <div>{{ answer }}</div>
                       </v-col>
                     </div>
-                    <div class="w-100 text-center title mt-5 px-3">
+                    <div
+                      class="w-100 text-center mt-5 px-3"
+                      :style="{ fontSize: font_size_answer + 'vw' }"
+                    >
                       Odpowiedź:
                       <span class="font-bold">{{
                         random_question_correct_answer
@@ -147,27 +154,34 @@
                     </div>
                   </div>
                   <div
-                    class="h-100 pt-3"
+                    class="h-100 pt-3 normal-question"
                     v-else-if="
                       activeDiffBtn === NORMAL &&
                       random_question_correct_type === NORMAL
                     "
                   >
-                    <div class="title pa-5 pt-0 text-center">
+                    <div
+                      class="title pa-5 pt-0 text-center"
+                      :style="{ fontSize: font_size_question + 'vw' }"
+                    >
                       {{ random_question_text }}
                     </div>
-                    <div class="d-flex flex-column">
+                    <div
+                      class="d-flex flex-column"
+                      :style="{ fontSize: font_size_answers + 'vw' }"
+                    >
                       <v-col
                         v-for="(answer, index) in random_question_answers"
                         :key="index"
-                        class="text-center"
+                        class="text-center py-0"
                       >
-                        <div class="abcd-answers">
-                          {{ alphabet[index] }}. {{ answer }}
-                        </div>
+                        <div>{{ alphabet[index] }}. {{ answer }}</div>
                       </v-col>
                     </div>
-                    <div class="w-100 text-center title mt-5 px-3">
+                    <div
+                      class="w-100 text-center mt-5 px-3"
+                      :style="{ fontSize: font_size_answer + 'vw' }"
+                    >
                       Odpowiedź:
                       <span class="font-bold">{{
                         random_question_correct_answer
@@ -175,10 +189,16 @@
                     </div>
                   </div>
                   <div class="h-100 pt-3" v-else>
-                    <div class="pa-5 pt-0 text-center title-question-hard">
+                    <div
+                      class="pa-5 pt-0 text-center"
+                      :style="{ fontSize: font_size_question + 'vw' }"
+                    >
                       {{ random_question_text }}
                     </div>
-                    <div class="w-100 text-center title mt-5 px-3">
+                    <div
+                      class="w-100 text-center mt-5 px-3"
+                      :style="{ fontSize: font_size_answer + 'vw' }"
+                    >
                       Odpowiedź:
                       <span class="font-bold">{{
                         random_question_correct_answer
@@ -258,14 +278,43 @@ export default {
     };
   },
   computed: {
+    font_size_question() {
+      if (this.answers_length < 10) return 2;
+      if (this.answers_length < 100) return 1.6;
+      if (this.answers_length < 250) return 1.5;
+      if (this.answers_length >= 250) return 1.4;
+    },
+    font_size_answers() {
+      if (this.answers_length < 10) return 2;
+      if (this.answers_length < 30) return 2;
+      if (this.answers_length < 50) return 1.8;
+      if (this.answers_length < 80) return 1.6;
+      if (this.answers_length < 150) return 1.5;
+      if (this.answers_length < 200) return 1.4;
+      if (this.answers_length >= 200) return 1.3;
+    },
+    font_size_answer() {
+      if (this.answers_length < 10) return 2;
+      if (this.answers_length < 80) return 1.7;
+      if (this.answers_length < 100) return 1.5;
+      if (this.answers_length < 200) return 1.4;
+      if (this.answers_length < 250) return 1.3;
+      if (this.answers_length >= 250) return 1.2;
+    },
     random_question_text() {
       return this.randomQuestion?.question;
     },
     random_question_answers() {
-      return this.randomQuestion?.answers;
+      return this.randomQuestion?.answers ?? [];
     },
     random_question_correct_answer() {
       return this.randomQuestion?.correctAnswer;
+    },
+    answers_length() {
+      return this.random_question_answers.reduce(
+        (total, currentString) => total + currentString?.length,
+        0
+      );
     },
     random_question_correct_type() {
       return this.randomQuestion?.type;

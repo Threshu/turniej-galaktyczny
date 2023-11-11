@@ -57,7 +57,7 @@
           >
         </div>
         <div class="w-100 h-60 px-2 pt-5">
-          <v-card color="primaryLight" class="h-100 questionBox">
+          <v-card color="primaryLight" class="h-100">
             <transition name="question" mode="out-in">
               <div class="d-flex flex-column h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
@@ -68,14 +68,18 @@
                       current_question_id != null
                     "
                   >
-                    <div class="title pa-5 pt-0 text-center">
+                    <div
+                      class="pa-5 pt-0 text-center"
+                      :style="{ fontSize: font_size_question + 'vw' }"
+                    >
                       {{ current_question_text }}
                     </div>
                     <div
-                      class="w-100 d-flex justify-content-space-evenly title"
+                      class="w-100 d-flex justify-content-space-evenly"
+                      :style="{ fontSize: font_size_answers + 'vw' }"
                     >
                       <template
-                        v-for="(answer, index) in current_question_answers"
+                        v-for="(answer, index) in current_question_answers_obj"
                       >
                         <v-col
                           v-if="index === 0"
@@ -109,17 +113,22 @@
                       current_question_id != null
                     "
                   >
-                    <div class="title pa-5 pt-0 text-center">
+                    <div
+                      class="pa-5 pt-0 text-center"
+                      :style="{ fontSize: font_size_question + 'vw' }"
+                    >
                       {{ current_question_text }}
                     </div>
-                    <div class="d-flex flex-column">
+                    <div
+                      class="d-flex flex-column"
+                      :style="{ fontSize: font_size_answers + 'vw' }"
+                    >
                       <v-col
-                        v-for="(answer, index) in current_question_answers"
+                        v-for="(answer, index) in current_question_answers_obj"
                         :key="index"
                         class="text-center py-0"
                       >
                         <div
-                          class="abcd-answers"
                           :class="{
                             'answer-correct':
                               current_question_show_answer && answer.correct,
@@ -139,18 +148,15 @@
                   >
                     <div
                       class="pa-5 pt-0 text-center"
-                      :class="
-                        current_question_show_answer
-                          ? 'title-question-hard-small'
-                          : 'title-question-hard'
-                      "
+                      :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ current_question_text }}
                     </div>
-                    <div class="w-100 text-center title mt-5 px-3">
+                    <div class="w-100 text-center mt-5 px-3">
                       <transition name="answer" mode="out-in">
                         <span
-                          class="font-bold answer-hard"
+                          class="font-bold"
+                          :style="{ fontSize: font_size_answers + 'vw' }"
                           v-if="current_question_show_answer"
                           >{{ current_question_correct_answer }}</span
                         >
@@ -160,7 +166,7 @@
                   </div>
                   <div
                     v-else-if="current_question_id == null"
-                    class="title pa-5 pt-0 text-center"
+                    class="pa-5 pt-0 text-center"
                   >
                     Pytanie
                   </div>
@@ -221,6 +227,35 @@ export default {
     };
   },
   computed: {
+    font_size_question() {
+      if (this.answers_length < 10) return 2;
+      if (this.answers_length < 100) return 1.6;
+      if (this.answers_length < 250) return 1.5;
+      if (this.answers_length >= 250) return 1.4;
+    },
+    font_size_answers() {
+      if (this.answers_length < 10) return 2;
+      if (this.answers_length < 30) return 2;
+      if (this.answers_length < 50) return 1.8;
+      if (this.answers_length < 80) return 1.6;
+      if (this.answers_length < 150) return 1.5;
+      if (this.answers_length < 200) return 1.4;
+      if (this.answers_length >= 200) return 1.3;
+    },
+    font_size_answer() {
+      if (this.answers_length < 10) return 2;
+      if (this.answers_length < 80) return 1.7;
+      if (this.answers_length < 100) return 1.5;
+      if (this.answers_length < 200) return 1.4;
+      if (this.answers_length < 250) return 1.3;
+      if (this.answers_length >= 250) return 1.2;
+    },
+    answers_length() {
+      return this.current_question_answers.reduce(
+        (total, currentString) => total + currentString?.length,
+        0
+      );
+    },
     players_to_display() {
       return this.currentGame?.players ?? [];
     },
@@ -240,7 +275,10 @@ export default {
       return this.currentQuestion?.question;
     },
     current_question_answers() {
-      const answers = this.currentQuestion?.answers ?? [];
+      return this.currentQuestion?.answers ?? [];
+    },
+    current_question_answers_obj() {
+      const answers = this.current_question_answers ?? [];
       return answers.map((answer) => {
         return {
           correct: answer === this.current_question_correct_answer,
@@ -316,16 +354,3 @@ export default {
   },
 };
 </script>
-<style>
-.title-question-hard {
-  font-size: 2vw;
-}
-
-.title-question-hard-small {
-  font-size: 1.2vw;
-}
-
-.answer-hard {
-  font-size: 1.5vw;
-}
-</style>
