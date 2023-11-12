@@ -199,7 +199,6 @@
                       class="w-100 text-center mt-5 px-3"
                       :style="{ fontSize: font_size_answer + 'vw' }"
                     >
-                      Odpowiedź:
                       <span class="font-bold">{{
                         random_question_correct_answer
                       }}</span>
@@ -345,9 +344,16 @@ export default {
     async setQuestionConfig(difficultyLvl) {
       const isFetched = this.checkIfQuestionsFetched(difficultyLvl);
       if (!isFetched) await this.getAllQuestions(difficultyLvl);
+      this.setCurrentQuestionsType(difficultyLvl);
       this.setQuestionsIds();
       this.getRandomQuestionId();
       await this.getRandomQuestion(isFetched);
+    },
+    setCurrentQuestionsType(difficultyLvl) {
+      if (difficultyLvl === this.EASY) this.questions = [...this.easyQuestions];
+      if (difficultyLvl === this.NORMAL)
+        this.questions = [...this.normalQuestions];
+      if (difficultyLvl === this.HARD) this.questions = [...this.hardQuestions];
     },
     checkIfQuestionsFetched(difficultyLvl) {
       if (difficultyLvl === this.EASY) return this.easyQuestions?.length > 0;
