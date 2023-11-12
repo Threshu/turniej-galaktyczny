@@ -69,7 +69,7 @@
                     "
                   >
                     <div
-                      class="text-center pb-5 font-bold"
+                      class="text-center pb-5 font-bold px-2"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ current_question_text }}
@@ -114,7 +114,7 @@
                     "
                   >
                     <div
-                      class="text-center pb-5 font-bold"
+                      class="text-center pb-5 font-bold px-2"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ current_question_text }}
@@ -147,7 +147,7 @@
                     "
                   >
                     <div
-                      class="text-center pb-5 font-bold"
+                      class="text-center pb-5 font-bold px-2"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ current_question_text }}
