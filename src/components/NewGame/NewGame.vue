@@ -59,17 +59,17 @@
         <div class="w-100 h-60 px-2 pt-5">
           <v-card color="primaryLight" class="h-100">
             <transition name="question" mode="out-in">
-              <div class="d-flex flex-column h-100 justify-content-center">
+              <div class="h-100 justify-content-center">
                 <transition name="answer" mode="out-in">
                   <div
-                    class="h-100"
+                    class="h-100 d-flex flex-column justify-content-center"
                     v-if="
                       current_question_type === EASY &&
                       current_question_id != null
                     "
                   >
                     <div
-                      class="pa-5 pt-0 text-center"
+                      class="text-center pb-5 font-bold"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ current_question_text }}
@@ -107,14 +107,14 @@
                     </div>
                   </div>
                   <div
-                    class="h-100"
+                    class="h-100 d-flex flex-column justify-content-center"
                     v-else-if="
                       current_question_type === NORMAL &&
                       current_question_id != null
                     "
                   >
                     <div
-                      class="pa-5 pt-0 text-center"
+                      class="text-center pb-5 font-bold"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ current_question_text }}
@@ -140,14 +140,14 @@
                     </div>
                   </div>
                   <div
-                    class="h-100"
+                    class="h-100 d-flex flex-column justify-content-center"
                     v-else-if="
                       current_question_type === HARD &&
                       current_question_id != null
                     "
                   >
                     <div
-                      class="pa-5 pt-0 text-center"
+                      class="text-center pb-5 font-bold"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ current_question_text }}
@@ -166,7 +166,7 @@
                   </div>
                   <div
                     v-else-if="current_question_id == null"
-                    class="pa-5 pt-0 text-center"
+                    class="pa-5 pt-0 text-center choose-question"
                   >
                     Pytanie
                   </div>
@@ -229,26 +229,26 @@ export default {
   computed: {
     font_size_question() {
       if (this.answers_length < 10) return 2;
-      if (this.answers_length < 100) return 1.6;
-      if (this.answers_length < 250) return 1.5;
-      if (this.answers_length >= 250) return 1.4;
+      if (this.answers_length < 100) return 1.7;
+      if (this.answers_length < 250) return 1.6;
+      if (this.answers_length >= 250) return 1.5;
     },
     font_size_answers() {
-      if (this.answers_length < 10) return 2;
+      if (this.answers_length < 10) return 2.5;
       if (this.answers_length < 30) return 2;
       if (this.answers_length < 50) return 1.8;
-      if (this.answers_length < 80) return 1.6;
-      if (this.answers_length < 150) return 1.5;
-      if (this.answers_length < 200) return 1.4;
-      if (this.answers_length >= 200) return 1.3;
+      if (this.answers_length < 80) return 1.7;
+      if (this.answers_length < 150) return 1.6;
+      if (this.answers_length < 200) return 1.5;
+      if (this.answers_length >= 200) return 1.4;
     },
     font_size_answer() {
       if (this.answers_length < 10) return 2;
-      if (this.answers_length < 80) return 1.7;
-      if (this.answers_length < 100) return 1.5;
-      if (this.answers_length < 200) return 1.4;
-      if (this.answers_length < 250) return 1.3;
-      if (this.answers_length >= 250) return 1.2;
+      if (this.answers_length < 80) return 1.8;
+      if (this.answers_length < 100) return 1.7;
+      if (this.answers_length < 200) return 1.6;
+      if (this.answers_length < 250) return 1.5;
+      if (this.answers_length >= 250) return 1.3;
     },
     answers_length() {
       return this.current_question_answers.reduce(

@@ -126,7 +126,7 @@
                     "
                   >
                     <div
-                      class="pa-5 pt-0 text-center"
+                      class="pa-5 pt-0 text-center font-bold"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ random_question_text }}
@@ -154,14 +154,14 @@
                     </div>
                   </div>
                   <div
-                    class="h-100 pt-3 normal-question"
+                    class="h-100 pt-3"
                     v-else-if="
                       activeDiffBtn === NORMAL &&
                       random_question_correct_type === NORMAL
                     "
                   >
                     <div
-                      class="title pa-5 pt-0 text-center"
+                      class="pa-5 pt-0 text-center font-bold"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ random_question_text }}
@@ -190,7 +190,7 @@
                   </div>
                   <div class="h-100 pt-3" v-else>
                     <div
-                      class="pa-5 pt-0 text-center"
+                      class="pa-5 pt-0 text-center font-bold"
                       :style="{ fontSize: font_size_question + 'vw' }"
                     >
                       {{ random_question_text }}
