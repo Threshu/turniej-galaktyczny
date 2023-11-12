@@ -263,6 +263,9 @@ export default {
       scores: [{ nick: "", points: 0 }],
       questionsIds: [],
       questions: [],
+      easyQuestions: [],
+      normalQuestions: [],
+      hardQuestions: [],
       randomQuestion: null,
       gameId: "x4SieVrmpZ2TLV7BKA7O",
       loader: true,
@@ -323,7 +326,6 @@ export default {
   async mounted() {
     this.loader = true;
     await this.getCurrentGame();
-    await this.setQuestionConfig(this.EASY);
     this.loader = false;
   },
   methods: {
@@ -341,10 +343,17 @@ export default {
       }
     },
     async setQuestionConfig(difficultyLvl) {
-      await this.getAllQuestions(difficultyLvl);
+      const isFetched = this.checkIfQuestionsFetched(difficultyLvl);
+      if (!isFetched) await this.getAllQuestions(difficultyLvl);
       this.setQuestionsIds();
       this.getRandomQuestionId();
       await this.getRandomQuestion();
+    },
+    checkIfQuestionsFetched(difficultyLvl) {
+      if (difficultyLvl === this.EASY) return this.easyQuestions?.length > 0;
+      if (difficultyLvl === this.NORMAL)
+        return this.normalQuestions?.length > 0;
+      if (difficultyLvl === this.HARD) return this.hardQuestions?.length > 0;
     },
     async getAllQuestions(difficultyLvl) {
       const querySnapshot = await projectFirestore
@@ -354,6 +363,10 @@ export default {
       this.questions = querySnapshot.docs.map((question) => {
         return { ...question.data(), id: question.id };
       });
+      if (difficultyLvl === this.EASY) this.easyQuestions = [...this.questions];
+      if (difficultyLvl === this.NORMAL)
+        this.normalQuestions = [...this.questions];
+      if (difficultyLvl === this.HARD) this.hardQuestions = [...this.questions];
     },
     setQuestionsIds() {
       this.questionsIds = this.questions.map((question) => question.id);
