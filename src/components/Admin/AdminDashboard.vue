@@ -209,7 +209,7 @@
               </div>
             </template>
             <template v-else>
-              <div class="title pa-5 text-center">
+              <div class="choose-question pa-5 text-center">
                 Rozpocznij grę i wybierz pytanie klikając na jedną z powyższych
                 kategorii.
               </div>
@@ -347,7 +347,7 @@ export default {
       if (!isFetched) await this.getAllQuestions(difficultyLvl);
       this.setQuestionsIds();
       this.getRandomQuestionId();
-      await this.getRandomQuestion();
+      await this.getRandomQuestion(isFetched);
     },
     checkIfQuestionsFetched(difficultyLvl) {
       if (difficultyLvl === this.EASY) return this.easyQuestions?.length > 0;
@@ -483,7 +483,15 @@ export default {
       const randomIndex = Math.floor(Math.random() * this.questionsIds.length);
       this.questionRandomId = this.questionsIds[randomIndex];
     },
-    async getRandomQuestion() {
+    async getRandomQuestion(isFetched) {
+      if (isFetched) {
+        const randomQuestion = this.questions.find(
+          (question) => question.id === this.questionRandomId
+        );
+        if (randomQuestion == null) return;
+        this.randomQuestion = randomQuestion;
+        return;
+      }
       const result = await projectFirestore
         .collection("questions")
         .doc(this.questionRandomId)
