@@ -155,7 +155,6 @@
                     <div class="w-100 text-center mt-5 px-3">
                       <transition name="answer" mode="out-in">
                         <span
-                          class="font-bold"
                           :style="{ fontSize: font_size_answers + 'vw' }"
                           v-if="current_question_show_answer"
                           >{{ current_question_correct_answer }}</span
