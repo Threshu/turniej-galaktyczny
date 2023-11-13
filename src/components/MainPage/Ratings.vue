@@ -10,7 +10,7 @@
       >
         <v-icon size="2.5vw">mdi-close</v-icon>
       </v-btn>
-      <v-card-title class="text-center font-bold"> TOP 10 </v-card-title>
+      <v-card-title class="text-center font-bold"> TOP 30 </v-card-title>
       <v-card-text class="w-100 m-auto my-2">
         <template v-if="!loader">
           <template v-if="players_to_display.length > 0">
