@@ -1,22 +1,22 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: '/',
-    component: () => import('../MainTemplate.vue'),
+    path: "/main",
+    component: () => import("../MainTemplate.vue"),
   },
   {
-    path: '/galaktyczny-admin',
-    name: 'AdminDashboard',
-    component: () => import('../components/Admin/AdminDashboard.vue'),
+    path: "/galaktyczny-admin",
+    name: "AdminDashboard",
+    component: () => import("../components/Admin/AdminDashboard.vue"),
   },
   {
-    path: '/zagraj',
-    name: 'MainTemplate',
-    component: () => import('../MainTemplate.vue'),
-    props: { showGameBtn: true }
-  }
+    path: "/",
+    name: "MainTemplate",
+    component: () => import("../MainTemplate.vue"),
+    props: { showGameBtn: true },
+  },
 ];
 
 const router = createRouter({
