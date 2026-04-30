@@ -1,4 +1,4 @@
-@import "variables.scss";
+@use "variables" as *;
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=latin-ext");
 
 html {

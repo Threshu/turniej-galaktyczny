@@ -15,7 +15,7 @@
         <v-row
           v-for="rule in rules"
           :key="rule.number"
-          class="py-5 d-flex align-items-center"
+          class="py-2 d-flex align-items-center"
           no-gutters
         >
           <v-col cols="2" class="w-100 text-center">
@@ -68,15 +68,20 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../../styles/variables.scss";
+@use "../../../styles/variables" as *;
 .how-to-play {
   color: $primary !important;
   box-shadow: 10px 10px 0 #43b649 !important;
   border-radius: 0 !important;
+  max-height: 95vh;
+  padding-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
 
   .v-card-title {
     font-size: 3.3vw;
     line-height: normal !important;
+    margin-bottom: 1rem;
   }
 
   .rule-number {

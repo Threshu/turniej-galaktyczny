@@ -11,6 +11,7 @@
     "firebase": "^8.10.1",
     "pinia": "^2.0.23",
     "roboto-fontface": "*",
+    "tslib": "^2.8.1",
     "vue": "^3.2.0",
     "vue-router": "^4.0.0",
     "vuetify": "^3.3.18"

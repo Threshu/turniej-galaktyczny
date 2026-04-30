@@ -8,7 +8,8 @@
       >
         <v-btn
           v-if="btn.show"
-          class="main-page-btn font-bold text-white w-50"
+          class="main-page-btn font-bold w-75"
+          color="primaryLight"
           elevation="9"
           size="3vw"
           @click="changePage(btn)"
@@ -65,6 +66,12 @@ export default {
           emit: true,
           show: this.showGameBtn,
         },
+        {
+          title: "Panel administratora",
+          componentName: "AdminDashboard",
+          emit: true,
+          show: this.showGameBtn,
+        },
       ];
     },
   },
@@ -79,6 +86,9 @@ export default {
       return TABS[this.selectedTab];
     },
     changePage(btn) {
+      if (btn.componentName === "AdminDashboard") {
+        return this.$router.push({ name: "AdminDashboard" });
+      }
       if (btn?.emit) return this.$emit("changePage", btn.componentName);
       this.selectedTab = btn.componentName;
     },

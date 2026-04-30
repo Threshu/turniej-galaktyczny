@@ -106,7 +106,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../../styles/variables.scss";
+@use "../../../styles/variables" as *;
 .ratings {
   color: $primary !important;
   box-shadow: 10px 10px 0 #43b649 !important;
